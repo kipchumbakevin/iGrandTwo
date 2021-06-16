@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:id="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="8dp"
+        android:layout_height="70dp">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/icon">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/tt" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon" />
+            </RelativeLayout>
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:paddingEnd="5dp"
+                android:paddingStart="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:paddingEnd="6dp"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/purple_700"
+                    android:text="The title of the content goes here even if it is more than one line"/>
+
+            </HorizontalScrollView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/purple_700"/>
+    </androidx.cardview.widget.CardView>
+</androidx.appcompat.widget.LinearLayoutCompat>

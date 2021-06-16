@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottomsheet"
+    android:orientation="vertical"
+    android:padding="20dp"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/mail"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="23dp"
+        android:layout_marginBottom="60dp"
+        app:cardElevation="8dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/telegram">
+    <ImageView
+        android:scaleType="fitXY"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:src="@drawable/mail" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mail">
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/linkedin"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="23dp"
+        android:layout_marginTop="3dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/twitter">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/link" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/telegram"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="23dp"
+        app:cardElevation="8dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linkedin">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/tele" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fb"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="23dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/fb" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/twitter"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="3dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="23dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fb">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/twitter" />
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
