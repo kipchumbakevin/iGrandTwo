@@ -31,7 +31,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
     @NonNull
     @Override
     public VideoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflator.inflate(R.layout.list_layouts,null);
+        View view = mLayoutInflator.inflate(R.layout.videos_layout,null);
         return new VideoHolder(view);
     }
 
@@ -41,7 +41,6 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
     }
-
     @Override
     public int getItemCount() {
         return mContentArray.size();
@@ -50,20 +49,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
     public class VideoHolder extends RecyclerView.ViewHolder {
         TextView title;
         String uri;
-        File file;
-        LinearLayoutCompat layoutCompat;
         public VideoHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            layoutCompat = itemView.findViewById(R.id.linear);
-            layoutCompat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(mContext, VideoPlayer.class);
-                    intent.putExtra("VIDEO",uri);
-                    mContext.startActivity(intent);
-                }
-            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

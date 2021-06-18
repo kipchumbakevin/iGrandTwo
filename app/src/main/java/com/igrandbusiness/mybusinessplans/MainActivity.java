@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private final int ID_Magazines = 4;
     MeowBottomNavigation meowBottomNavigation;
     TextView igrandTitle;
-    static boolean active = false;
     FrameLayout frameLayout;
     CardView faceb,twitter,telegram,mail,linkedin;
     String phone;
@@ -141,14 +140,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 oo = true;
-                Intent email = new Intent(Intent.ACTION_SEND);
+                Intent email = new Intent(Intent.ACTION_SENDTO);
+                email.setData(Uri.parse("mailto:"));
                 email.putExtra(Intent.EXTRA_EMAIL,  new String[]{"igrandbp@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, "Customer Service");
-
+                if (email.resolveActivity(getPackageManager())!=null){
+                    startActivity(email);
+                }
                 //need this to prompts email client only
-                email.setType("message/rfc822");
+               // email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                //startActivity(Intent.createChooser(email, "Choose an Email client :"));
             }
         });
         telegram.setOnClickListener(new View.OnClickListener() {
@@ -287,15 +289,4 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         ft.commit();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        active = true;
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        active = false;
-    }
 }

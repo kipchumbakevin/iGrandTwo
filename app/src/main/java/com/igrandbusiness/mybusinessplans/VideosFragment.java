@@ -118,7 +118,7 @@ public class VideosFragment extends Fragment {
                         novideos.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    network_error.setText("Oh no!\nA server error has occurred.Ensure you are connected then retry.");
+                    network_error.setText("Oh no!\nA server error has occurred.Please retry.");
                     network_error_card.setVisibility(View.VISIBLE);
                 }
             }

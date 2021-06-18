@@ -33,7 +33,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     @NonNull
     @Override
     public ContentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflator.inflate(R.layout.list_layouts,null);
+        View view = mLayoutInflator.inflate(R.layout.audio_layout,null);
         return new ContentHolder(view);
     }
     @Override
@@ -50,23 +50,10 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
 
     public class ContentHolder extends RecyclerView.ViewHolder {
         TextView title;
-        LinearLayoutCompat layoutCompat;
         String uri,titl;
         public ContentHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            layoutCompat = itemView.findViewById(R.id.linear);
-
-
-            layoutCompat.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(mContext, AudioPlayer.class);
-                    intent.putExtra("URI",uri);
-                    intent.putExtra("TITLE",titl);
-                    mContext.startActivity(intent);
-                }
-            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
