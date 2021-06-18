@@ -43,6 +43,7 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
         setTitle(name);
         progress.setVisibility(View.VISIBLE);
         uri = Uri.parse(pdf);
+        progress.setVisibility(View.VISIBLE);
         FileLoader.with(this).load(pdf,false)
                 .fromDirectory("My_Pdfs",FileLoader.DIR_INTERNAL)
                 .asFile(new FileRequestListener<File>() {
@@ -56,7 +57,7 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
                                     .enableAnnotationRendering(true)
                                     .onLoad(ViewPDF.this)
                                     .scrollHandle(new DefaultScrollHandle(ViewPDF.this))
-                                    .spacing(2)
+                                    .spacing(3)
                                     .onPageError(ViewPDF.this)
                                     .load();
                         }catch (Exception e){
