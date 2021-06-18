@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IGrandBusinessPlans">
+        <activity android:name=".NewsActivity"></activity>
         <activity android:name=".AudioPlayer" />
         <activity
             android:name=".VideoPlayer"

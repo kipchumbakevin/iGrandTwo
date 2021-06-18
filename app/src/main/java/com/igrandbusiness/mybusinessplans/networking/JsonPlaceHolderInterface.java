@@ -1,5 +1,6 @@
 package com.igrandbusiness.mybusinessplans.networking;
 
+import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface JsonPlaceHolderInterface {
     //getpod
     @GET("api/getpod")
     Call<List<ReceiveData>> getPod();
+    //getpod
+    @GET("api/getnews")
+    Call<List<NewsModel>> getNews();
 }

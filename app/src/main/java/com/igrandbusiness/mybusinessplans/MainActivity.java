@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private final int ID_Magazines = 4;
     MeowBottomNavigation meowBottomNavigation;
     TextView igrandTitle;
+    static boolean active = false;
     FrameLayout frameLayout;
     CardView faceb,twitter,telegram,mail,linkedin;
     String phone;
@@ -284,5 +285,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         ft.replace(R.id.frame_layout, videosFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
 }

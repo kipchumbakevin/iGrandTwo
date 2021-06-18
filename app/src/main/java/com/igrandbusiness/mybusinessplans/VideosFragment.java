@@ -118,7 +118,7 @@ public class VideosFragment extends Fragment {
                         novideos.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    network_error.setText(getString(R.string.serverError));
+                    network_error.setText("Oh no!\nA server error has occurred.Ensure you are connected then retry.");
                     network_error_card.setVisibility(View.VISIBLE);
                 }
             }
@@ -126,7 +126,7 @@ public class VideosFragment extends Fragment {
             @Override
             public void onFailure(Call<List<ReceiveData>> call, Throwable t) {
                 progress.setVisibility(View.GONE);
-                network_error.setText(getString(R.string.netwrokError));
+                network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
                 network_error_card.setVisibility(View.VISIBLE);
             }
 
