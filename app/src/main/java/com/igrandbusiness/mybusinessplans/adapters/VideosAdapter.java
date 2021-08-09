@@ -59,6 +59,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
                     Intent intent = new Intent(mContext, VideoPlayer.class);
                     intent.putExtra("VIDEO",uri);
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                     //MKPlayerActivity.configPlayer((Activity) mContext).play(uri);
 
                 }

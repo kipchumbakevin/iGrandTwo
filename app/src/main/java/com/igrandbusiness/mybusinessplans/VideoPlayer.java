@@ -25,8 +25,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.HashMap;
+
 public class VideoPlayer extends AppCompatActivity {
     String vid;
+    //AndExoPlayerView andExoPlayerView;
+    YouTubePlayerView youTubePlayerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class VideoPlayer extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         vid = getIntent().getExtras().getString("VIDEO");
-        YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
@@ -52,5 +56,17 @@ public class VideoPlayer extends AppCompatActivity {
                 youTubePlayer.loadVideo(vid, 0);
             }
         });
+//        andExoPlayerView = findViewById(R.id.andExoPlayerView);
+//        vid = "https://youtu.be/xwKvg1-5iWc";
+//        HashMap<String,String>headers = new HashMap<>();
+//        headers.put("foo","bar");
+//        andExoPlayerView.setSource(vid,headers);
+    }
+    @Override
+    public void onBackPressed() {
+        youTubePlayerView.release();
+        startActivity(new Intent(VideoPlayer.this,MainActivity.class)
+                .putExtra("FROM",Integer.toString(1)));
+        finish();
     }
 }

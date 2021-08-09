@@ -3,6 +3,7 @@ package com.igrandbusiness.mybusinessplans;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -25,6 +26,11 @@ public class AudioPlayer extends AppCompatActivity {
 
         jcPlayerView.initPlaylist(jcAudios, null);
         jcPlayerView.createNotification(R.drawable.icon);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        jcPlayerView.kill();
     }
 }

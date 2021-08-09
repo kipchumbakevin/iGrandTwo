@@ -5,7 +5,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class Constants {
-    public static final String BASE_URL="https://igrandsub.einsbrand.com/";
+    public static final String BASE_URL="https://igrandsub.igrandbp.com/";
     //public static final String BASE_URL="http://192.168.100.55:8000/";
     public static final String ACTIVE_CONSTANT = "Active";
 

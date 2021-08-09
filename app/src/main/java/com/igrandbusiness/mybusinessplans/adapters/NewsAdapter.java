@@ -1,7 +1,9 @@
 package com.igrandbusiness.mybusinessplans.adapters;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +59,22 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext, NewsActivity.class);
-                    intent.putExtra("URL",url);
-                    mContext.startActivity(intent);
+//                    Intent intent = new Intent(mContext, NewsActivity.class);
+//                    intent.putExtra("URL",url);
+//                    mContext.startActivity(intent);
+                    Uri uri = Uri.parse(url);
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    // To count with Play market backstack, After pressing back button,
+                    // to taken back to our application, we need to add following flags to intent.
+                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    try {
+                        mContext.startActivity(goToMarket);
+                    } catch (ActivityNotFoundException e) {
+                        mContext.startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(url)));
+                    }
                 }
             });
         }

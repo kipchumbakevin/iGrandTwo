@@ -11,4 +11,13 @@
         app:showFullScreenButton="false"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="match_parent"/>
+<!--    <com.potyvideo.library.AndExoPlayerView-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:id="@+id/andExoPlayerView"-->
+<!--        app:andexo_resize_mode="Fit"-->
+<!--        app:andexo_show_full_screen="true"-->
+<!--        app:andexo_show_controller="true"-->
+<!--        app:andexo_play_when_ready="true"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#ffcc00</color>
+    <color name="transparent">#4dffffff</color>
 
     <!--    bottom navigation colors-->
     <color name="selectedIconColor">#013334</color>

@@ -6,10 +6,10 @@
         android:title="Call/text"/>
     <item
         android:id="@+id/find"
-        android:title="Find Us"/>
+        android:title="Connect with us"/>
     <item
         android:id="@+id/share"
-        android:title="Share"/>
+        android:title="Recommend us"/>
     <item
         android:id="@+id/rate"
         android:title="Rate Us"/>

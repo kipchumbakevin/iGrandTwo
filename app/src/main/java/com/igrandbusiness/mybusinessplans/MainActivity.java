@@ -1,5 +1,6 @@
 package com.igrandbusiness.mybusinessplans;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.InterstitialAd;
+import com.facebook.ads.InterstitialAdListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -33,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottom;
     ImageView menuImageView;
-    boolean oo,ff = true;
+    private InterstitialAd interstitialAd;
+    private InterstitialAdListener interstitialAdListener;
+    int ads,from;
+    boolean oo,ff,homeIsLoaded = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +53,60 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         telegram = findViewById(R.id.telegram);
         mail = findViewById(R.id.mail);
         linkedin = findViewById(R.id.linkedin);
-        phone = "+254795801971";
+        phone = "0755907382";
+        ads = 0;
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
+        from = Integer.parseInt(getIntent().getExtras().getString("FROM"));
+        AudienceNetworkAds.initialize(this);
+        interstitialAd = new InterstitialAd(this, getString(R.string.interstitial));
+        interstitialAdListener = new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                // Interstitial ad displayed callback
+                //  Log.e(TAG, "Interstitial ad displayed.");
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                if (ads == 0){
+                    ads = 1;
+                }else if (ads == 1){
+                    ads = 2;
+                }else if (ads == 2){
+                    ads = 0;
+                }
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Ad error callback
+                //Log.e(TAG, "Interstitial ad failed to load: " + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Interstitial ad is loaded and ready to be displayed
+                // Log.d(TAG, "Interstitial ad is loaded and ready to be displayed!");
+                // Show the ad
+                //interstitialAd.show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+                // Log.d(TAG, "Interstitial ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+                // Log.d(TAG, "Interstitial ad impression logged!");
+            }
+        };
+        interstitialAd.loadAd(
+                interstitialAd.buildLoadAdConfig()
+                        .withAdListener(interstitialAdListener)
+                        .build());
 
         frameLayout = findViewById(R.id.frame_layout);
         igrandTitle = findViewById(R.id.igrand_title);
@@ -65,13 +126,97 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
                 switch (item.getId()){
-                    case ID_Home: loadHome();
+                    case ID_Home:
+                        if (ads == 1){
+                            if (interstitialAd.isAdLoaded()){
+                                interstitialAd.show();
+                            }
+                            else if (ads == 0){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }else if (ads == 2){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }
+                        }
+                        loadHome();
                     break;
-                    case ID_Magazines: loadMagazines();
+                    case ID_Magazines:
+                        if (ads == 1){
+                            if (interstitialAd.isAdLoaded()){
+                                interstitialAd.show();
+                            }
+                            else if (ads == 0){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }else if (ads == 2){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }
+                        }
+                        loadMagazines();
                     break;
-                    case ID_Podcast: loadPodcasts();
+                    case ID_Podcast:
+                        if (ads == 1){
+                            if (interstitialAd.isAdLoaded()){
+                                interstitialAd.show();
+                            }
+                            else if (ads == 0){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }else if (ads == 2){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }
+                        }
+                        loadPodcasts();
                     break;
-                    case ID_Videos: loadVideos();
+                    case ID_Videos:
+                        if (ads == 1){
+                            if (interstitialAd.isAdLoaded()){
+                                interstitialAd.show();
+                            }
+                            else if (ads == 0){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }else if (ads == 2){
+                                if (!interstitialAd.isAdLoaded()) {
+                                    interstitialAd.loadAd(
+                                            interstitialAd.buildLoadAdConfig()
+                                                    .withAdListener(interstitialAdListener)
+                                                    .build());
+                                }
+                            }
+                        }
+                        loadVideos();
                     break;
                     default:
                 }
@@ -93,7 +238,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 }
             }
         });
-        meowBottomNavigation.show(ID_Home,true);
+        if (from == 1){
+            meowBottomNavigation.show(ID_Videos,true);
+        }else {
+            meowBottomNavigation.show(ID_Home, true);
+        }
         faceb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 oo = true;
-                Uri uri = Uri.parse("https://twitter.com/iGrandbp");
+                Uri uri = Uri.parse("https://twitter.com/iGrandBR");
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
                 // to taken back to our application, we need to add following flags to intent.
@@ -130,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     startActivity(goToMarket);
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://twitter.com/iGrandbp")));
+                            Uri.parse("https://twitter.com/iGrandBR")));
                 }
             }
         });
@@ -194,6 +343,13 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
     }
+//
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        outState.putString("Bug","value");
+//        super.onSaveInstanceState(outState);
+//    }
+
     public void showPopup(View v){
         if (!oo) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -254,39 +410,60 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
     }
     private void loadHome(){
-        igrandTitle.setText("iGrand Business News");
+        igrandTitle.setText("Editorials");
         HomeFragment homeFragment = new HomeFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, homeFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        homeIsLoaded = true;
 //        Home fragment = new Home();
 //        FragmentManager manager = getSupportFragmentManager();
 //        manager.beginTransaction().replace(R.id.fragments,fragment,fragment.getTag()).commit();
     }
     private void loadMagazines(){
-        igrandTitle.setText("iGrand Business Magazines");
+        igrandTitle.setText("Magazines");
         MagazinesFragment magazinesFragment = new MagazinesFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, magazinesFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        homeIsLoaded = false;
     }
     private void loadPodcasts(){
-        igrandTitle.setText("iGrand Business Podcasts");
+        igrandTitle.setText("Podcasts");
         PodcastFragment podcastFragment = new PodcastFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, podcastFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        homeIsLoaded = false;
     }
     private void loadVideos(){
-        igrandTitle.setText("iGrand Business Videos");
+        igrandTitle.setText("Vlogs");
         VideosFragment videosFragment = new VideosFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_layout, videosFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+        homeIsLoaded = false;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (homeIsLoaded) {
+            super.onBackPressed();
+        }else {
+            meowBottomNavigation.show(ID_Home,true);
+            //loadHome();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (interstitialAd != null){
+            interstitialAd.destroy();
+        }
+    }
 }
