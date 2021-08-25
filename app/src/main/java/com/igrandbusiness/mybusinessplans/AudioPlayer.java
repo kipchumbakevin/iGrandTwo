@@ -28,9 +28,4 @@ public class AudioPlayer extends AppCompatActivity {
         jcPlayerView.createNotification(R.drawable.icon);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        jcPlayerView.kill();
-    }
 }

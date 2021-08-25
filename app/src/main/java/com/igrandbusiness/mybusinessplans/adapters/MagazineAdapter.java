@@ -30,7 +30,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     @NonNull
     @Override
     public MagazineView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflator.inflate(R.layout.list_layouts,null);
+        View view = mLayoutInflator.inflate(R.layout.list_layouts,parent,false);
         return new MagazineView(view);
     }
 
@@ -38,7 +38,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     public void onBindViewHolder(@NonNull MagazineView holder, int position) {
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
-        holder.uri = Constants.BASE_URL + "magazine/" + receiveData.getUrl();
+        holder.uri = receiveData.getUrl();
         holder.titl = receiveData.getTitle();
     }
 

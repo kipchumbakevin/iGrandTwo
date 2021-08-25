@@ -16,6 +16,12 @@ public class NewsModel {
     @SerializedName("date")
     @Expose
     private String date;
+    @SerializedName("category")
+    @Expose
+    private String category;
+    @SerializedName("host")
+    @Expose
+    private String host;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -45,6 +51,22 @@ public class NewsModel {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public String getDate() {

@@ -39,7 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsModel newsModel = mArrayList.get(position);
         holder.title.setText(newsModel.getTitle());
-        holder.date.setText(newsModel.getDate());
+        holder.category.setText(newsModel.getCategory());
         holder.url = newsModel.getLink();
     }
 
@@ -49,12 +49,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title,date;
+        TextView title,category;
         String url;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            date = itemView.findViewById(R.id.date);
+            category = itemView.findViewById(R.id.category);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
