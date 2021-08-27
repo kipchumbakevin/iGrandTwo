@@ -33,7 +33,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     @NonNull
     @Override
     public ContentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflator.inflate(R.layout.audio_layout,null);
+        View view = mLayoutInflator.inflate(R.layout.audio_layout,parent,false);
         return new ContentHolder(view);
     }
     @Override

@@ -21,9 +21,9 @@ public class AudioPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_audio_player);
         url = getIntent().getExtras().getString("URI");
         jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerView);
+        jcPlayerView.kill();
         ArrayList<JcAudio> jcAudios = new ArrayList<>();
         jcAudios.add(JcAudio.createFromURL("iGrand Business",url));
-
         jcPlayerView.initPlaylist(jcAudios, null);
         jcPlayerView.createNotification(R.drawable.icon);
     }
