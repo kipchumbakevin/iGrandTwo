@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IGrandBusinessPlans">
+        <activity android:name=".ViewMagazine"></activity>
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,14 +17,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsActivity"/>
-        <activity android:name=".AudioPlayer"/>
+        <activity android:name=".NewsActivity" />
+        <activity android:name=".AudioPlayer" />
         <activity
             android:name=".VideoPlayer"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden|smallestScreenSize|screenLayout|uiMode"
             android:screenOrientation="landscape" />
         <activity android:name=".ViewPDF" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.igrandbusiness.mybusinessplans.R;
+import com.igrandbusiness.mybusinessplans.ViewMagazine;
 import com.igrandbusiness.mybusinessplans.ViewPDF;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.utils.Constants;

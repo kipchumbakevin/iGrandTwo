@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
 import com.igrandbusiness.mybusinessplans.adapters.NewsAdapter;
+import com.igrandbusiness.mybusinessplans.models.CategoriesModel;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,9 @@ public class HomeFragment extends Fragment {
     private String mParam2;
     NewsAdapter newsAdapter;
     TextView novideos,network_error;
+    String category;
+    private final List<CategoriesModel> categories = new ArrayList<>();
+    TabLayout tabLayout;
     CardView progress, reload, network_error_card;
     RecyclerView recyclerView;
     boolean active = false;
@@ -90,14 +96,105 @@ public class HomeFragment extends Fragment {
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
         novideos = view.findViewById(R.id.novideos);
+        tabLayout = view.findViewById(R.id.tablayout);
         newsAdapter = new NewsAdapter(getActivity(),mNewsArray);
         recyclerView.setAdapter(newsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fetchNews();
+        getCategoryList();
         reload.setOnClickListener(view1 -> {
-            fetchNews();
+            getCategoryList();
+        });
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                category = tabLayout.getTabAt(tab.getPosition()).getText().toString();
+                mNewsArray.clear();
+                newsAdapter.notifyDataSetChanged();
+                fetchNews();
+                fetchLatestNews();
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
         return view;
+    }
+    private void getCategoryList() {
+        categories.clear();
+        tabLayout.removeAllTabs();
+        mNewsArray.clear();
+        newsAdapter.notifyDataSetChanged();
+        progress.setVisibility(View.VISIBLE);
+        network_error_card.setVisibility(View.GONE);
+        Call<List<CategoriesModel>> call = RetrofitClient.getInstance(getActivity())
+                .getApiConnector()
+                .getCategories();
+        call.enqueue(new Callback<List<CategoriesModel>>() {
+            @Override
+            public void onResponse(Call<List<CategoriesModel>> call, Response<List<CategoriesModel>> response) {
+                progress.setVisibility(View.GONE);
+                if (response.code() == 200) {
+                    categories.addAll(response.body());
+                    if (categories.size()>0) {
+                        filltabs(tabLayout);
+                    }else {
+                        novideos.setVisibility(View.VISIBLE);
+                    }
+                    //fetchGroup();
+                } else {
+                    progress.setVisibility(View.GONE);
+                    network_error.setText("Oh no!\nA server error has occurred.Please retry.");
+                    network_error_card.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<List<CategoriesModel>> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+                network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
+                network_error_card.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    private void filltabs(TabLayout tabLayout) {
+        if (!categories.isEmpty()) {
+            for (int index = 0; index < categories.size(); index++) {
+                String fragmentname = categories.get(index).getCategory();
+                tabLayout.addTab(tabLayout.newTab().setText(fragmentname));
+            }
+        }
+    }
+    private void fetchLatestNews() {
+        progress.setVisibility(View.VISIBLE);
+        network_error_card.setVisibility(View.GONE);
+        mNewsArray.clear();
+        Call<NewsModel> call = RetrofitClient.getInstance(getActivity())
+                .getApiConnector()
+                .getLatestNews(category);
+        call.enqueue(new Callback<NewsModel>() {
+            @Override
+            public void onResponse(Call<NewsModel> call, Response<NewsModel> response) {
+                progress.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                } else {
+                    network_error.setText("Oh no!\nA server error has occurred.Please retry.");
+                    network_error_card.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<NewsModel> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+                network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
+                network_error_card.setVisibility(View.VISIBLE);
+            }
+
+        });
     }
     private void fetchNews() {
         progress.setVisibility(View.VISIBLE);
@@ -105,7 +202,7 @@ public class HomeFragment extends Fragment {
         mNewsArray.clear();
         Call<List<NewsModel>> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
-                .getNews();
+                .getNews(category);
         call.enqueue(new Callback<List<NewsModel>>() {
             @Override
             public void onResponse(Call<List<NewsModel>> call, Response<List<NewsModel>> response) {
