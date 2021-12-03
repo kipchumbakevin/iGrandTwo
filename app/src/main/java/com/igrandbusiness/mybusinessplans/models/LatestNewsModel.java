@@ -3,7 +3,7 @@ package com.igrandbusiness.mybusinessplans.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class NewsModel {
+public class LatestNewsModel {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -19,18 +19,18 @@ public class NewsModel {
     @SerializedName("date")
     @Expose
     private String date;
-    @SerializedName("category")
-    @Expose
-    private String category;
-    @SerializedName("host")
-    @Expose
-    private String host;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+    @SerializedName("category")
+    @Expose
+    private Category category;
+    @SerializedName("host")
+    @Expose
+    private String host;
 
     public Integer getId() {
         return id;
@@ -64,22 +64,6 @@ public class NewsModel {
         this.link = link;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
     public String getDate() {
         return date;
     }
@@ -102,5 +86,21 @@ public class NewsModel {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }

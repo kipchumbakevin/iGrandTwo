@@ -1,46 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:backgroundTint="#e6ffff"
-    app:cardCornerRadius="8dp"
-    android:layout_marginTop="3dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:minHeight="80dp"
-    android:elevation="8dp"
-    app:cardElevation="8dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:layout_marginStart="3dp"
-            android:id="@+id/category"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Category:"
-            android:textSize="15sp"
-            android:textColor="@color/black"/>
-    <TextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp">
+        <ImageView
+            android:layout_width="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"
+            android:id="@+id/image_view"
+            android:layout_height="90dp"/>
+    </androidx.cardview.widget.CardView>
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
-        android:layout_marginStart="3dp"
+        android:layout_marginStart="5dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/title"
-        app:layout_constraintTop_toBottomOf="@id/category"
+        android:textStyle="bold"
         android:text="World Bank Says Digital Economy is Crucial to Africa's Economic Recovery"
         android:textSize="15sp"
-        android:fontFamily="sans-serif-condensed"
         android:textColor="@color/black"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date"
+                android:textSize="12sp"
+                android:drawablePadding="3dp"
+                android:text="01 Jan 2020"
+                app:drawableStartCompat="@drawable/ic_baseline_calendar_today_24" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="3dp"
+                android:id="@+id/host"
+                android:layout_marginStart="10dp"
+                android:textSize="12sp"
+                android:text="John Doe"
+                app:drawableStartCompat="@drawable/ic_baseline_person_24" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-</androidx.cardview.widget.CardView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <!--    android:backgroundTint="#e6ffff"-->

@@ -7,14 +7,17 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.NewsActivity;
 import com.igrandbusiness.mybusinessplans.R;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -39,8 +42,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NewsModel newsModel = mArrayList.get(position);
         holder.title.setText(newsModel.getTitle());
-        holder.category.setText(newsModel.getCategory());
+        holder.host.setText(newsModel.getHost());
+        holder.date.setText(newsModel.getDate());
         holder.url = newsModel.getLink();
+        Glide.with(mContext).load(Constants.BASE_URL +
+                "public/editorials/"+newsModel.getImageurl()).into(holder.image);
     }
 
     @Override
@@ -49,12 +55,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title,category;
+        TextView title,host,date;
         String url;
+        ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            category = itemView.findViewById(R.id.category);
+            host = itemView.findViewById(R.id.host);
+            image = itemView.findViewById(R.id.image_view);
+            date = itemView.findViewById(R.id.date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

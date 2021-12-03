@@ -6,15 +6,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.AudioPlayer;
 import com.igrandbusiness.mybusinessplans.R;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +45,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
         holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
         holder.titl = receiveData.getTitle();
+        Glide.with(mContext)
+                .load(Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl())
+                .into(holder.image);
     }
     @Override
     public int getItemCount() {
@@ -50,10 +56,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
 
     public class ContentHolder extends RecyclerView.ViewHolder {
         TextView title;
+        ImageView image;
         String uri,titl;
         public ContentHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
+            image = itemView.findViewById(R.id.image_view);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

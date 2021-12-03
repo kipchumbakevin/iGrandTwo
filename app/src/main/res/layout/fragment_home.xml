@@ -24,10 +24,60 @@
                 android:layout_height="match_parent">
                 <ImageView
                     android:layout_width="match_parent"
+                    android:id="@+id/latest_news_image"
                     android:layout_height="match_parent"
-                    android:src="@drawable/igrandlogo"
+                    android:src="@drawable/test"
                     android:scaleType="centerCrop"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/latest_news_title"
+                    android:text="Webiner Review"
+                    android:id="@+id/latest_news_category"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@drawable/latest_edit"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/latest_news_title"
+                    app:layout_constraintBottom_toTopOf="@id/learn_more"
+                    android:text="Financial Conversations for Couples"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Learn more"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:id="@+id/learn_more"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:drawablePadding="3dp"
+                        app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_24" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/search"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_baseline_search_24"
+                        android:layout_margin="20dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

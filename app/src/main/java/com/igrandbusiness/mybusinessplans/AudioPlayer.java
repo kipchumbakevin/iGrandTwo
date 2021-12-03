@@ -13,17 +13,18 @@ import com.example.jean.jcplayer.view.JcPlayerView;
 import java.util.ArrayList;
 
 public class AudioPlayer extends AppCompatActivity {
-    String url;
+    String url,title;
     JcPlayerView jcPlayerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_player);
         url = getIntent().getExtras().getString("URI");
+        title = getIntent().getExtras().getString("TITLE");
         jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerView);
         jcPlayerView.kill();
         ArrayList<JcAudio> jcAudios = new ArrayList<>();
-        jcAudios.add(JcAudio.createFromURL("iGrand Business",url));
+        jcAudios.add(JcAudio.createFromURL(title,url));
         jcPlayerView.initPlaylist(jcAudios, null);
         jcPlayerView.createNotification(R.drawable.icon);
     }

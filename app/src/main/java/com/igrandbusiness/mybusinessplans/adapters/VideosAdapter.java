@@ -3,18 +3,22 @@ package com.igrandbusiness.mybusinessplans.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.R;
 import com.igrandbusiness.mybusinessplans.VideoPlayer;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +44,9 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
+        Glide.with(mContext)
+                .load(Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl())
+                .into(holder.image);
     }
     @Override
     public int getItemCount() {
@@ -49,10 +56,11 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
     public class VideoHolder extends RecyclerView.ViewHolder {
         TextView title;
         String uri;
+        ImageView image;
         public VideoHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-
+            image = itemView.findViewById(R.id.image_view);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

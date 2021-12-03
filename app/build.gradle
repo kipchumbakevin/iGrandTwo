@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     //bottom menu
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
     //ideal audio
     implementation 'com.github.jeancsanchez:JcPlayer:2.6.16'
     //media player

@@ -1,6 +1,10 @@
 package com.igrandbusiness.mybusinessplans;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
 import com.igrandbusiness.mybusinessplans.adapters.NewsAdapter;
 import com.igrandbusiness.mybusinessplans.models.CategoriesModel;
+import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
@@ -46,10 +53,13 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     NewsAdapter newsAdapter;
-    TextView novideos,network_error;
+    TextView novideos,network_error,latestNewsCategory,latestNewsTitle,learnMore;
     String category;
+    ImageView latestNewsImage,search;
+    String latestUrl;
     private final List<CategoriesModel> categories = new ArrayList<>();
     TabLayout tabLayout;
+    View act;
     CardView progress, reload, network_error_card;
     RecyclerView recyclerView;
     boolean active = false;
@@ -75,7 +85,6 @@ public class HomeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +93,6 @@ public class HomeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,13 +104,39 @@ public class HomeFragment extends Fragment {
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
         novideos = view.findViewById(R.id.novideos);
+        latestNewsCategory = view.findViewById(R.id.latest_news_category);
+        latestNewsTitle = view.findViewById(R.id.latest_news_title);
+        learnMore = view.findViewById(R.id.learn_more);
+        search = view.findViewById(R.id.search);
+        latestNewsImage = view.findViewById(R.id.latest_news_image);
         tabLayout = view.findViewById(R.id.tablayout);
         newsAdapter = new NewsAdapter(getActivity(),mNewsArray);
         recyclerView.setAdapter(newsAdapter);
+        act = view;
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getCategoryList();
+        fetchLatestNews();
         reload.setOnClickListener(view1 -> {
             getCategoryList();
+            fetchLatestNews();
+        });
+        learnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse(latestUrl);
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(latestUrl)));
+                }
+            }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -111,7 +145,6 @@ public class HomeFragment extends Fragment {
                 mNewsArray.clear();
                 newsAdapter.notifyDataSetChanged();
                 fetchNews();
-                fetchLatestNews();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -172,15 +205,26 @@ public class HomeFragment extends Fragment {
         progress.setVisibility(View.VISIBLE);
         network_error_card.setVisibility(View.GONE);
         mNewsArray.clear();
-        Call<NewsModel> call = RetrofitClient.getInstance(getActivity())
+        learnMore.setVisibility(View.GONE);
+        latestNewsTitle.setVisibility(View.GONE);
+        //latestNewsImage.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.igrandlogo));
+        latestNewsCategory.setVisibility(View.GONE);
+        Call<LatestNewsModel> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
-                .getLatestNews(category);
-        call.enqueue(new Callback<NewsModel>() {
+                .getLatestNews();
+        call.enqueue(new Callback<LatestNewsModel>() {
             @Override
-            public void onResponse(Call<NewsModel> call, Response<NewsModel> response) {
+            public void onResponse(Call<LatestNewsModel> call, Response<LatestNewsModel> response) {
                 progress.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    recyclerView.setVisibility(View.VISIBLE);
+                    latestNewsCategory.setText(response.body().getCategory().getCategory());
+                    latestNewsTitle.setText(response.body().getTitle());
+                    Glide.with(act).load(Constants.BASE_URL+"public/editorials/"+response.body().getImageurl())
+                            .into(latestNewsImage);
+                    learnMore.setVisibility(View.VISIBLE);
+                    latestNewsTitle.setVisibility(View.VISIBLE);
+                    latestNewsCategory.setVisibility(View.VISIBLE);
+                    latestUrl = response.body().getLink();
 
                 } else {
                     network_error.setText("Oh no!\nA server error has occurred.Please retry.");
@@ -188,12 +232,11 @@ public class HomeFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<NewsModel> call, Throwable t) {
+            public void onFailure(Call<LatestNewsModel> call, Throwable t) {
                 progress.setVisibility(View.GONE);
                 network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
                 network_error_card.setVisibility(View.VISIBLE);
             }
-
         });
     }
     private void fetchNews() {

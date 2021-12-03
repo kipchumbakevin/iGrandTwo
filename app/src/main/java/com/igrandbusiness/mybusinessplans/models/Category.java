@@ -3,19 +3,14 @@ package com.igrandbusiness.mybusinessplans.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ReceiveData {
+public class Category {
+
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("title")
+    @SerializedName("category")
     @Expose
-    private String title;
-    @SerializedName("imageurl")
-    @Expose
-    private String imageurl;
-    @SerializedName("url")
-    @Expose
-    private String url;
+    private String category;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -31,29 +26,12 @@ public class ReceiveData {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCategory() {
+        return category;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImageurl() {
-        return imageurl;
-    }
-
-    public void setImageurl(String imageurl) {
-        this.imageurl = imageurl;
-    }
-
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getCreatedAt() {
