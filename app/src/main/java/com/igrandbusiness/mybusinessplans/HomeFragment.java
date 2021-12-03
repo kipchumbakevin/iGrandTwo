@@ -120,6 +120,12 @@ public class HomeFragment extends Fragment {
             getCategoryList();
             fetchLatestNews();
         });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),SearchActivity.class));
+            }
+        });
         learnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
