@@ -33,6 +33,11 @@ public interface JsonPlaceHolderInterface {
     Call<List<NewsModel>> getNews(
             @Field("category")String category
     );
+    @FormUrlEncoded
+    @POST("api/getsearchednews")
+    Call<List<NewsModel>>getSearched(
+            @Field("category")String query
+    );
     @GET("api/getlatestnews")
     Call<LatestNewsModel> getLatestNews();
     @GET("api/getcategories")

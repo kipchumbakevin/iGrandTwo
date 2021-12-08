@@ -11,13 +11,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/jcplayerView"
+        app:layout_constraintBottom_toTopOf="@id/argmusicplayer"
         android:src="@drawable/icon"
         android:scaleType="fitXY"/>
-    <com.example.jean.jcplayer.view.JcPlayerView
-        android:id="@+id/jcplayerView"
+    <com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView
+        android:id="@+id/argmusicplayer"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_margin="30dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="wrap_content"/>
+<!--    <com.example.jean.jcplayer.view.JcPlayerView-->
+<!--        android:id="@+id/jcplayerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_margin="30dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

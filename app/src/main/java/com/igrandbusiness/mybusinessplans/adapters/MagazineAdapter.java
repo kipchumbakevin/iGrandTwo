@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.R;
 import com.igrandbusiness.mybusinessplans.ViewMagazine;
 import com.igrandbusiness.mybusinessplans.ViewPDF;
@@ -38,9 +40,11 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     @Override
     public void onBindViewHolder(@NonNull MagazineView holder, int position) {
         ReceiveData receiveData = mContentArray.get(position);
-        holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
         holder.titl = receiveData.getTitle();
+        Glide.with(mContext)
+                .load(Constants.BASE_URL+"public/magazine/"+receiveData.getImageurl())
+                .into(holder.imageView);
     }
 
     @Override
@@ -49,12 +53,11 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     }
 
     public class MagazineView extends RecyclerView.ViewHolder {
-        TextView title;
         String uri,titl;
+        ImageView imageView;
         public MagazineView(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
-
+            imageView = itemView.findViewById(R.id.image_view);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

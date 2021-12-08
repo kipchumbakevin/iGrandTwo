@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,7 +90,7 @@ public class MagazinesFragment extends Fragment {
         novideos = view.findViewById(R.id.novideos);
         magazineAdapter = new MagazineAdapter(getActivity(),mContentArrayList);
         recyclerView.setAdapter(magazineAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),getActivity().getResources().getInteger(R.integer.product_grid_span)));
         fetchMagazines();
         reload.setOnClickListener(view1 -> fetchMagazines());
         return view;
