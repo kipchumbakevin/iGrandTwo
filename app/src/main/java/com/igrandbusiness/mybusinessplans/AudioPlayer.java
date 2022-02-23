@@ -25,8 +25,8 @@ public class AudioPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_audio_player);
         url = getIntent().getExtras().getString("URI");
         title = getIntent().getExtras().getString("TITLE");
-        message = "Podcast loading";
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        message = "Podcast loading...";
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 //        jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerView);
 //        jcPlayerView.kill();
 //        ArrayList<JcAudio> jcAudios = new ArrayList<>();
@@ -34,11 +34,11 @@ public class AudioPlayer extends AppCompatActivity {
 //        jcPlayerView.initPlaylist(jcAudios, null);
 //        jcPlayerView.createNotification(R.drawable.icon);
         ArgAudio audio = ArgAudio.createFromURL("", title, url);
-        ArgPlayerLargeView argMusicPlayer = (ArgPlayerLargeView) findViewById(R.id.argmusicplayer);
+        ArgPlayerLargeView argMusicPlayer = findViewById(R.id.argmusicplayer);
         argMusicPlayer.disableProgress();
         argMusicPlayer.disableNextPrevButtons();
         argMusicPlayer.enableNotification(this);
-        argMusicPlayer.playAudioAfterPercent(20);
+        argMusicPlayer.playAudioAfterPercent(10);
         argMusicPlayer.play(audio);
     }
 

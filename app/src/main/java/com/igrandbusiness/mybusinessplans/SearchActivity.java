@@ -61,6 +61,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void getSearchedNews(String query) {
         progress.setVisibility(View.VISIBLE);
+        noItem.setVisibility(View.GONE);
         mNewsArray.clear();
         Call<List<NewsModel>> call = RetrofitClient.getInstance(SearchActivity.this)
                 .getApiConnector()
@@ -77,7 +78,11 @@ public class SearchActivity extends AppCompatActivity {
                     }else {
                         noItem.setVisibility(View.VISIBLE);
                     }
-                } else {
+                }
+                else if(response.code() == 200){
+                    noItem.setVisibility(View.VISIBLE);
+                }
+                else {
                     Toast.makeText(SearchActivity.this, "Oh no! A server error has occurred.Please retry.", Toast.LENGTH_SHORT).show();
                 }
             }
