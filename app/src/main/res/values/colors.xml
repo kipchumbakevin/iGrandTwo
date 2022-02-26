@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#ffcc00</color>
     <color name="transparent">#4dffffff</color>
+    <color name="tt">#ffffff</color>
     <color name="colorOnboardingIndicatorInactive">#72bcf7</color>
 
     <!--    bottom navigation colors-->

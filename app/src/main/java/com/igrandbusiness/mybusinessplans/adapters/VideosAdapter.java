@@ -45,7 +45,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
         Glide.with(mContext)
-                .load(Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl())
+                .load(Constants.BASE_URL+"public/videos/"+receiveData.getImageurl())
                 .into(holder.image);
     }
     @Override
@@ -65,6 +65,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, VideoPlayer.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("VIDEO",uri);
                     mContext.startActivity(intent);
                     ((Activity)mContext).finish();

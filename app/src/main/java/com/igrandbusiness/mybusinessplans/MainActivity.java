@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -31,10 +32,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private final int ID_Podcast = 2;
     private final int ID_Videos = 3;
     private final int ID_Magazines = 4;
+    private final int ID_Calc = 5;
     MeowBottomNavigation meowBottomNavigation;
     TextView igrandTitle;
     FrameLayout frameLayout;
-    CardView faceb,twitter,telegram,mail,linkedin;
+    CardView faceb,twitter,telegram,mail,linkedin,whatsapp;
     String phone;
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottom;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottom = findViewById(R.id.bottom);
+        whatsapp = findViewById(R.id.whatsapp);
         faceb = findViewById(R.id.fb);
         twitter = findViewById(R.id.twitter);
         telegram = findViewById(R.id.telegram);
@@ -116,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         meowBottomNavigation.add(new MeowBottomNavigation.Model(ID_Podcast,R.drawable.ic_baseline_music_note_24));
         meowBottomNavigation.add(new MeowBottomNavigation.Model(ID_Videos,R.drawable.ic_baseline_videocam_24));
         meowBottomNavigation.add(new MeowBottomNavigation.Model(ID_Magazines,R.drawable.ic_baseline_menu_book_24));
+        meowBottomNavigation.add(new MeowBottomNavigation.Model(ID_Calc,R.drawable.ic_calc));
 
         meowBottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
@@ -127,97 +131,21 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onShowItem(MeowBottomNavigation.Model item) {
                 switch (item.getId()){
                     case ID_Home:
-                        if (ads == 1){
-                            if (interstitialAd.isAdLoaded()){
-                                interstitialAd.show();
-                            }
-                            else if (ads == 0){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }else if (ads == 2){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }
-                        }
                         loadHome();
                     break;
                     case ID_Magazines:
-                        if (ads == 1){
-                            if (interstitialAd.isAdLoaded()){
-                                interstitialAd.show();
-                            }
-                            else if (ads == 0){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }else if (ads == 2){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }
-                        }
                         loadMagazines();
                     break;
                     case ID_Podcast:
-                        if (ads == 1){
-                            if (interstitialAd.isAdLoaded()){
-                                interstitialAd.show();
-                            }
-                            else if (ads == 0){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }else if (ads == 2){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }
-                        }
                         loadPodcasts();
                     break;
                     case ID_Videos:
-                        if (ads == 1){
-                            if (interstitialAd.isAdLoaded()){
-                                interstitialAd.show();
-                            }
-                            else if (ads == 0){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }else if (ads == 2){
-                                if (!interstitialAd.isAdLoaded()) {
-                                    interstitialAd.loadAd(
-                                            interstitialAd.buildLoadAdConfig()
-                                                    .withAdListener(interstitialAdListener)
-                                                    .build());
-                                }
-                            }
-                        }
                         loadVideos();
                     break;
+                    case ID_Calc:
+                        from = 2;
+                        startActivity(new Intent(MainActivity.this,CalculatorActivity.class));
+                        break;
                     default:
                 }
             }
@@ -268,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 oo = true;
-                Uri uri = Uri.parse("https://twitter.com/iGrandBR");
+                Uri uri = Uri.parse("https://twitter.com/DiraLaBiashara");
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
                 // to taken back to our application, we need to add following flags to intent.
@@ -279,29 +207,46 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                     startActivity(goToMarket);
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://twitter.com/iGrandBR")));
+                            Uri.parse("https://twitter.com/DiraLaBiashara")));
                 }
             }
         });
+        whatsapp.setOnClickListener(view->{
+            try {
+                PackageManager pm = getPackageManager();
+                pm.getPackageInfo("com.whatsapp",PackageManager.GET_ACTIVITIES);
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone=+254755907382"));
+                startActivity(sendIntent);
 
-        mail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                oo = true;
-                Intent email = new Intent(Intent.ACTION_SENDTO);
-                email.setData(Uri.parse("mailto:"));
-                email.putExtra(Intent.EXTRA_EMAIL,  new String[]{"igrandbp@gmail.com"});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Customer Service");
-                if (email.resolveActivity(getPackageManager())!=null){
-                    startActivity(email);
-                }
-                //need this to prompts email client only
-               // email.setType("message/rfc822");
-
-                //startActivity(Intent.createChooser(email, "Choose an Email client :"));
             }
+            catch (PackageManager.NameNotFoundException e) {
+                Toast.makeText(this, "Whatsapp not installed", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+//            sendIntent.putExtra(Intent.EXTRA_TEXT,"Sample text");
+//            sendIntent.setType("text/plain");
+//            sendIntent.setPackage("com.whatsapp");
+//            startActivity(sendIntent);
         });
+        mail.setOnClickListener(view -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            oo = true;
+            Intent email = new Intent(Intent.ACTION_SENDTO);
+            email.setData(Uri.parse("mailto:"));
+            email.putExtra(Intent.EXTRA_EMAIL,  new String[]{"hello@igrandbp.com"});
+            email.putExtra(Intent.EXTRA_SUBJECT, "Customer Service");
+            if (email.resolveActivity(getPackageManager())!=null){
+                startActivity(email);
+            }else {
+                Toast.makeText(MainActivity.this, "There is no app to perform this action", Toast.LENGTH_SHORT).show();
+            }
+            //need this to prompts email client only
+           // email.setType("message/rfc822");
+
+            //startActivity(Intent.createChooser(email, "Choose an Email client :"));
+        });
+
         telegram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -447,6 +392,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
         homeIsLoaded = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (from == 2){
+            meowBottomNavigation.show(ID_Home,true);
+        }
     }
 
     @Override

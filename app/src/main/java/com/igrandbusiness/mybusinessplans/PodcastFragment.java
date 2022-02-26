@@ -1,5 +1,8 @@
 package com.igrandbusiness.mybusinessplans;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -10,13 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
 import com.igrandbusiness.mybusinessplans.adapters.VideosAdapter;
+import com.igrandbusiness.mybusinessplans.models.Feature;
+import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +49,10 @@ public class PodcastFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ContentAdapter contentAdapter;
-    TextView novideos,network_error;
+    TextView novideos,network_error,latestNewsTitle,learnMore;
+    ImageView latestNewsImage;
+    View act;
+    String latestUrl;
     CardView progress, reload, network_error_card;
     RecyclerView recyclerView;
     private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
@@ -86,16 +97,66 @@ public class PodcastFragment extends Fragment {
         network_error = view.findViewById(R.id.network_error);
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
+        latestNewsTitle = view.findViewById(R.id.latest_news_title);
+        learnMore = view.findViewById(R.id.learn_more);
+        latestNewsImage = view.findViewById(R.id.latest_news_image);
         novideos = view.findViewById(R.id.novideos);
+        act = view;
         contentAdapter = new ContentAdapter(getActivity(),mContentArrayList);
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         fetchPod();
+        fetchLatest();
         reload.setOnClickListener(view1 -> {
             fetchPod();
+            fetchLatest();
+        });
+        learnMore.setOnClickListener(view12 -> {
+            Intent intent = new Intent(getActivity(), AudioPlayer.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("URI",latestUrl);
+            intent.putExtra("TITLE",latestNewsTitle.getText().toString());
+            startActivity(intent);
         });
         return view;
     }
+
+    private void fetchLatest() {
+        progress.setVisibility(View.VISIBLE);
+        network_error_card.setVisibility(View.GONE);
+        mContentArrayList.clear();
+//        learnMore.setVisibility(View.GONE);
+//        latestNewsTitle.setVisibility(View.GONE);
+        //latestNewsImage.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.igrandlogo));
+        Call<Feature> call = RetrofitClient.getInstance(getActivity())
+                .getApiConnector()
+                .getLatestFeature();
+        call.enqueue(new Callback<Feature>() {
+            @Override
+            public void onResponse(Call<Feature> call, Response<Feature> response) {
+                progress.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    //latestNewsTitle.setText(response.body().getTitle());
+                    Glide.with(act).load(Constants.BASE_URL+"public/features/"+response.body().getPodcast())
+                            .into(latestNewsImage);
+//                    learnMore.setVisibility(View.VISIBLE);
+//                    latestNewsTitle.setVisibility(View.VISIBLE);
+//                    latestUrl = response.body().getUrl();
+
+                } else {
+                    network_error.setText("Oh no!\nA server error has occurred.Please retry.");
+                    network_error_card.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Feature> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+                network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
+                network_error_card.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void fetchPod() {
         progress.setVisibility(View.VISIBLE);
         network_error_card.setVisibility(View.GONE);

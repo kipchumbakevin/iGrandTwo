@@ -8,6 +8,69 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/constraint_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintHeight_percent=".40"
+            android:layout_height="0dp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="3dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:id="@+id/latest_news_image"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/latest_news_title"
+                        app:layout_constraintBottom_toTopOf="@id/learn_more"
+                        android:text="Financial Conversations for Couples"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="25sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Learn more"
+                        android:gravity="center"
+                        android:paddingStart="5dp"
+                        android:visibility="gone"
+                        android:paddingEnd="5dp"
+                        android:background="@drawable/text_tt"
+                        android:textSize="12sp"
+                        android:id="@+id/learn_more"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:drawablePadding="3dp"
+                        app:drawableEndCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintHeight_percent=".60"
+            android:layout_height="0dp">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -91,5 +154,6 @@
                 </androidx.cardview.widget.CardView>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

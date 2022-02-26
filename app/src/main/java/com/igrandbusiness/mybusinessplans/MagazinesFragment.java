@@ -1,5 +1,8 @@
 package com.igrandbusiness.mybusinessplans;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -11,12 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.adapters.MagazineAdapter;
+import com.igrandbusiness.mybusinessplans.models.Feature;
+import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +45,10 @@ public class MagazinesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     CardView progress,reload,network_error_card;
-    TextView network_error,novideos;
+    TextView network_error,novideos,latestNewsTitle,learnMore;
+    ImageView latestNewsImage;
+    View act;
+    String latestUrl;
     RecyclerView recyclerView;
     MagazineAdapter magazineAdapter;
 
@@ -87,13 +98,67 @@ public class MagazinesFragment extends Fragment {
         network_error = view.findViewById(R.id.network_error);
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
+        act = view;
+        latestNewsTitle = view.findViewById(R.id.latest_news_title);
+        learnMore = view.findViewById(R.id.learn_more);
+        latestNewsImage = view.findViewById(R.id.latest_news_image);
         novideos = view.findViewById(R.id.novideos);
         magazineAdapter = new MagazineAdapter(getActivity(),mContentArrayList);
         recyclerView.setAdapter(magazineAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),getActivity().getResources().getInteger(R.integer.product_grid_span)));
         fetchMagazines();
-        reload.setOnClickListener(view1 -> fetchMagazines());
+        fetchLatest();
+        reload.setOnClickListener(view1 -> {
+            fetchMagazines();
+            fetchLatest();
+
+        });
+        learnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ViewPDF.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("URI",latestUrl);
+                intent.putExtra("TITLE",latestNewsTitle.getText().toString());
+                startActivity(intent);
+            }
+        });
         return view;
+    }
+    private void fetchLatest() {
+        progress.setVisibility(View.VISIBLE);
+        network_error_card.setVisibility(View.GONE);
+        mContentArrayList.clear();
+//        learnMore.setVisibility(View.GONE);
+//        latestNewsTitle.setVisibility(View.GONE);
+        //latestNewsImage.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.igrandlogo));
+        Call<Feature> call = RetrofitClient.getInstance(getActivity())
+                .getApiConnector()
+                .getLatestFeature();
+        call.enqueue(new Callback<Feature>() {
+            @Override
+            public void onResponse(Call<Feature> call, Response<Feature> response) {
+                progress.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    //latestNewsTitle.setText(response.body().getTitle());
+                    Glide.with(act).load(Constants.BASE_URL+"public/features/"+response.body().getMagazine())
+                            .into(latestNewsImage);
+//                    learnMore.setVisibility(View.VISIBLE);
+//                    latestNewsTitle.setVisibility(View.VISIBLE);
+//                    latestUrl = response.body().getUrl();
+
+                } else {
+                    network_error.setText("Oh no!\nA server error has occurred.Please retry.");
+                    network_error_card.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Feature> call, Throwable t) {
+                progress.setVisibility(View.GONE);
+                network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
+                network_error_card.setVisibility(View.VISIBLE);
+            }
+        });
     }
     private void fetchMagazines() {
         progress.setVisibility(View.VISIBLE);

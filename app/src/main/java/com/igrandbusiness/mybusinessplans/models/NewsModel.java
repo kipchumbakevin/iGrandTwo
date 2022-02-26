@@ -13,9 +13,9 @@ public class NewsModel {
     @SerializedName("imageurl")
     @Expose
     private String imageurl;
-    @SerializedName("link")
+    @SerializedName("url")
     @Expose
-    private String link;
+    private String url;
     @SerializedName("date")
     @Expose
     private String date;
@@ -56,12 +56,12 @@ public class NewsModel {
         this.imageurl = imageurl;
     }
 
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getCategory() {

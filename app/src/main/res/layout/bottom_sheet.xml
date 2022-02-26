@@ -15,15 +15,13 @@
         android:id="@+id/mail"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:elevation="8dp"
         app:cardCornerRadius="23dp"
         android:layout_marginBottom="60dp"
-        app:cardElevation="8dp"
         android:layout_marginTop="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/telegram">
     <ImageView
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:src="@drawable/mail" />
@@ -41,17 +39,15 @@
         android:id="@+id/linkedin"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:elevation="8dp"
         app:cardCornerRadius="23dp"
         android:layout_marginTop="3dp"
-        app:cardElevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/twitter">
 
         <ImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/link" />
     </androidx.cardview.widget.CardView>
 
@@ -59,9 +55,7 @@
         android:id="@+id/telegram"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:elevation="8dp"
         app:cardCornerRadius="23dp"
-        app:cardElevation="8dp"
         android:layout_marginTop="3dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linkedin">
@@ -69,7 +63,7 @@
         <ImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/tele" />
     </androidx.cardview.widget.CardView>
 
@@ -77,34 +71,44 @@
         android:id="@+id/fb"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:elevation="8dp"
         app:cardCornerRadius="23dp"
-        app:cardElevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/fb" />
     </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/twitter"
+        android:id="@+id/whatsapp"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_marginTop="3dp"
-        android:elevation="8dp"
         app:cardCornerRadius="23dp"
-        app:cardElevation="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fb">
 
         <ImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
+            android:src="@drawable/whatsa" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/twitter"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="3dp"
+        app:cardCornerRadius="23dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/whatsapp">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/twitter" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

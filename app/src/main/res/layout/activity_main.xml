@@ -22,7 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/igrand_title"
-                android:fontFamily="sans-serif-thin"
+                android:textAllCaps="true"
+                android:textStyle="bold"
                 android:layout_centerInParent="true"
                 android:textSize="18sp"
                 android:textColor="@color/purple_700"/>

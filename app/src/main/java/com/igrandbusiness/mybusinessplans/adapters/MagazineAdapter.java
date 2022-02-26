@@ -62,6 +62,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ViewPDF.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("URI",uri);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);

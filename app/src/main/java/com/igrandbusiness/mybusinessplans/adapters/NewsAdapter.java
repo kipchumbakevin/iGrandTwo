@@ -44,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.title.setText(newsModel.getTitle());
         holder.host.setText(newsModel.getHost());
         holder.date.setText(newsModel.getDate());
-        holder.url = newsModel.getLink();
+        holder.url = newsModel.getUrl();
         Glide.with(mContext).load(Constants.BASE_URL +
                 "public/editorials/"+newsModel.getImageurl()).into(holder.image);
     }

@@ -48,6 +48,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl())
                 .into(holder.image);
+        holder.imageurl = Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl();
     }
     @Override
     public int getItemCount() {
@@ -57,7 +58,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     public class ContentHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView image;
-        String uri,titl;
+        String uri,titl,imageurl;
         public ContentHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
@@ -66,7 +67,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, AudioPlayer.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("URI",uri);
+                    intent.putExtra("IMAGEURL",imageurl);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
                 }

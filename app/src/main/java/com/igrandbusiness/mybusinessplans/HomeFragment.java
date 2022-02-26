@@ -20,10 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
 import com.igrandbusiness.mybusinessplans.adapters.NewsAdapter;
 import com.igrandbusiness.mybusinessplans.models.CategoriesModel;
+import com.igrandbusiness.mybusinessplans.models.Feature;
 import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
@@ -53,10 +55,11 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     NewsAdapter newsAdapter;
-    TextView novideos,network_error,latestNewsCategory,latestNewsTitle,learnMore;
+    TextView novideos,network_error,latestNewsTitle,learnMore;
     String category;
-    ImageView latestNewsImage,search;
+    ImageView latestNewsImage;
     String latestUrl;
+    MaterialCardView search;
     private final List<CategoriesModel> categories = new ArrayList<>();
     TabLayout tabLayout;
     View act;
@@ -104,7 +107,6 @@ public class HomeFragment extends Fragment {
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
         novideos = view.findViewById(R.id.novideos);
-        latestNewsCategory = view.findViewById(R.id.latest_news_category);
         latestNewsTitle = view.findViewById(R.id.latest_news_title);
         learnMore = view.findViewById(R.id.learn_more);
         search = view.findViewById(R.id.search);
@@ -211,26 +213,23 @@ public class HomeFragment extends Fragment {
         progress.setVisibility(View.VISIBLE);
         network_error_card.setVisibility(View.GONE);
         mNewsArray.clear();
-        learnMore.setVisibility(View.GONE);
-        latestNewsTitle.setVisibility(View.GONE);
+//        learnMore.setVisibility(View.GONE);
+//        latestNewsTitle.setVisibility(View.GONE);
         //latestNewsImage.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.igrandlogo));
-        latestNewsCategory.setVisibility(View.GONE);
-        Call<LatestNewsModel> call = RetrofitClient.getInstance(getActivity())
+        Call<Feature> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
-                .getLatestNews();
-        call.enqueue(new Callback<LatestNewsModel>() {
+                .getLatestFeature();
+        call.enqueue(new Callback<Feature>() {
             @Override
-            public void onResponse(Call<LatestNewsModel> call, Response<LatestNewsModel> response) {
+            public void onResponse(Call<Feature> call, Response<Feature> response) {
                 progress.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    latestNewsCategory.setText(response.body().getCategory().getCategory());
-                    latestNewsTitle.setText(response.body().getTitle());
-                    Glide.with(act).load(Constants.BASE_URL+"public/editorials/"+response.body().getImageurl())
+                    //latestNewsTitle.setText(response.body().getTitle());
+                    Glide.with(act).load(Constants.BASE_URL+"public/features/"+response.body().getEditorial())
                             .into(latestNewsImage);
-                    learnMore.setVisibility(View.VISIBLE);
-                    latestNewsTitle.setVisibility(View.VISIBLE);
-                    latestNewsCategory.setVisibility(View.VISIBLE);
-                    latestUrl = response.body().getLink();
+//                    learnMore.setVisibility(View.VISIBLE);
+//                    latestNewsTitle.setVisibility(View.VISIBLE);
+//                    latestUrl = response.body().getUrl();
 
                 } else {
                     network_error.setText("Oh no!\nA server error has occurred.Please retry.");
@@ -238,7 +237,7 @@ public class HomeFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<LatestNewsModel> call, Throwable t) {
+            public void onFailure(Call<Feature> call, Throwable t) {
                 progress.setVisibility(View.GONE);
                 network_error.setText("Oh no!\nA network error has occurred.Ensure you are connected then retry.");
                 network_error_card.setVisibility(View.VISIBLE);
