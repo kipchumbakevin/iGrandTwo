@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         phone = "0755907382";
         ads = 0;
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
-        from = Integer.parseInt(getIntent().getExtras().getString("FROM"));
+        if (getIntent().hasExtra("FROM")) {
+            from = Integer.parseInt(getIntent().getExtras().getString("FROM"));
+        }
         AudienceNetworkAds.initialize(this);
         interstitialAd = new InterstitialAd(this, getString(R.string.interstitial));
         interstitialAdListener = new InterstitialAdListener() {
@@ -143,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         loadVideos();
                     break;
                     case ID_Calc:
-                        from = 2;
                         startActivity(new Intent(MainActivity.this,CalculatorActivity.class));
+                        finish();
                         break;
                     default:
                 }
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         });
         if (from == 1){
             meowBottomNavigation.show(ID_Videos,true);
-        }else {
+        }else{
             meowBottomNavigation.show(ID_Home, true);
         }
         faceb.setOnClickListener(new View.OnClickListener() {
@@ -394,13 +396,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         homeIsLoaded = false;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (from == 2){
-            meowBottomNavigation.show(ID_Home,true);
-        }
-    }
 
     @Override
     public void onBackPressed() {

@@ -78,20 +78,17 @@ public class SplashScreen extends AppCompatActivity {
     private void setupOnboardingItems(){
         List<OnboardingItem>onboardingItems = new ArrayList<>();
         OnboardingItem one = new OnboardingItem();
-        one.setTitle("Read insights to help you grow your business");
-        one.setImage(R.drawable.one);
+        one.setImage(R.drawable.splashscreen);
 
-        OnboardingItem two = new OnboardingItem();
-        two.setTitle("Listen to and watch our podcasts and video reviews.");
-        two.setImage(R.drawable.two);
-
-        OnboardingItem three = new OnboardingItem();
-        three.setTitle("Download and read magazines every month.");
-        three.setImage(R.drawable.three);
+//        OnboardingItem two = new OnboardingItem();
+//        two.setTitle("Listen to and watch our podcasts and video reviews.");
+//        two.setImage(R.drawable.two);
+//
+//        OnboardingItem three = new OnboardingItem();
+//        three.setTitle("Download and read magazines every month.");
+//        three.setImage(R.drawable.three);
 
         onboardingItems.add(one);
-        onboardingItems.add(two);
-        onboardingItems.add(three);
 
         onboardingAdapter = new OnboardingAdapter(onboardingItems);
     }

@@ -5,15 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AudioPlayer">
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/imageview"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/title"
+        android:layout_marginTop="20dp"
+        android:singleLine="true"
+        android:padding="3dp"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/argmusicplayer"
+        app:layout_constraintBottom_toTopOf="@id/argmusicplayer">
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/imageview"
         android:scaleType="centerCrop"/>
+    </androidx.cardview.widget.CardView>
     <com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView
         android:id="@+id/argmusicplayer"
         app:layout_constraintBottom_toBottomOf="parent"

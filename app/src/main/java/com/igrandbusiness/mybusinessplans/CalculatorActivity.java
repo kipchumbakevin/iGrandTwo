@@ -1,6 +1,8 @@
 package com.igrandbusiness.mybusinessplans;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
@@ -145,5 +147,11 @@ public class CalculatorActivity extends AppCompatActivity {
             input.setText(selection);
             input.setSelection(pos - 1);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 }
