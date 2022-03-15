@@ -138,6 +138,7 @@ public class PodcastFragment extends Fragment {
                 if (response.isSuccessful()) {
                     //latestNewsTitle.setText(response.body().getTitle());
                     Glide.with(act).load(Constants.BASE_URL+"public/features/"+response.body().getPodcast())
+                            .placeholder(R.drawable.progress_glide)
                             .into(latestNewsImage);
 //                    learnMore.setVisibility(View.VISIBLE);
 //                    latestNewsTitle.setVisibility(View.VISIBLE);

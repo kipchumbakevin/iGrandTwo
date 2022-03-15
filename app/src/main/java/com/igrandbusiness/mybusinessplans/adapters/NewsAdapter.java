@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.igrandbusiness.mybusinessplans.NewsActivity;
 import com.igrandbusiness.mybusinessplans.R;
+import com.igrandbusiness.mybusinessplans.ReadEditorial;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.utils.Constants;
 
@@ -45,8 +46,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.host.setText(newsModel.getHost());
         holder.date.setText(newsModel.getDate());
         holder.url = newsModel.getUrl();
-        Glide.with(mContext).load(Constants.BASE_URL +
-                "public/editorials/"+newsModel.getImageurl()).into(holder.image);
+        holder.imageUrl = Constants.BASE_URL + "public/editorials/"+newsModel.getImageurl();
+        holder.c = newsModel.getCategory();
+        holder.details_id = Integer.toString(newsModel.getDetailsId());
+        Glide.with(mContext).load(holder.imageUrl)
+                .placeholder(R.drawable.progress_glide)
+                .into(holder.image);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title,host,date;
-        String url;
+        String url,details_id,c,imageUrl;
         ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,22 +73,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Intent intent = new Intent(mContext, NewsActivity.class);
-//                    intent.putExtra("URL",url);
-//                    mContext.startActivity(intent);
-                    Uri uri = Uri.parse(url);
-                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    // To count with Play market backstack, After pressing back button,
-                    // to taken back to our application, we need to add following flags to intent.
-                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                    try {
-                        mContext.startActivity(goToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        mContext.startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse(url)));
-                    }
+                    Intent intent = new Intent(mContext, ReadEditorial.class);
+                    intent.putExtra("ID",details_id);
+                    intent.putExtra("IMAGE",imageUrl);
+                    intent.putExtra("CAT",c);
+                    mContext.startActivity(intent);
                 }
             });
         }

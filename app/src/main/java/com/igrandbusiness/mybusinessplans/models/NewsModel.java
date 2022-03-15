@@ -7,6 +7,9 @@ public class NewsModel {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("details_id")
+    @Expose
+    private Integer detailsId;
     @SerializedName("title")
     @Expose
     private String title;
@@ -38,6 +41,14 @@ public class NewsModel {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getDetailsId() {
+        return detailsId;
+    }
+
+    public void setDetailsId(Integer detailsId) {
+        this.detailsId = detailsId;
     }
 
     public String getTitle() {

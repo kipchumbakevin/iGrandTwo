@@ -47,6 +47,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
         holder.titl = receiveData.getTitle();
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl())
+                .placeholder(R.drawable.progress_glide)
                 .into(holder.image);
         holder.imageurl = Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl();
     }
