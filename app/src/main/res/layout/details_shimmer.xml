@@ -26,15 +26,15 @@
         android:text="End Of Proxies In Company Ownership In Kenya"
         android:textSize="25sp"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/linear"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintTop_toBottomOf="@id/text_title"
         android:layout_marginTop="5dp">
         <ImageView
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/linear"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:id="@+id/content"
         android:layout_marginEnd="20dp"
         android:text="The content goes here\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\n\n\"
