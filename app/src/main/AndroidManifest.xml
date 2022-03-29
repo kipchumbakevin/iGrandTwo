@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IGrandBusinessPlans">
-        <activity android:name=".ReadEditorial"
+        <activity android:name=".AboutUs"
             android:exported="true"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ReadEditorial"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CalculatorActivity"
             android:exported="true"

@@ -352,6 +352,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                             Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())));
                 }
                 return true;
+            case R.id.about:
+                startActivity(new Intent(this,AboutUs.class));
+                return true;
             default:
                 return false;
         }
