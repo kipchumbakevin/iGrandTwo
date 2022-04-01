@@ -3,6 +3,7 @@
 
 package com.igrandbusiness.mybusinessplans.networking;
 
+import com.igrandbusiness.mybusinessplans.models.Author;
 import com.igrandbusiness.mybusinessplans.models.CategoriesModel;
 import com.igrandbusiness.mybusinessplans.models.Feature;
 import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
@@ -55,5 +56,10 @@ public interface JsonPlaceHolderInterface {
     @POST("api/getnewsdetails")
     Call<List<NewsDetailsModel>> get(
             @Field("id")int details_id
+    );
+    @FormUrlEncoded
+    @POST("api/getauthor")
+    Call<List<Author>> getA(
+            @Field("id")int id
     );
 }

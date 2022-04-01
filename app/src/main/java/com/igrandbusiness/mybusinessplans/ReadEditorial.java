@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.igrandbusiness.mybusinessplans.models.Author;
 import com.igrandbusiness.mybusinessplans.models.NewsDetailsModel;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
 import com.igrandbusiness.mybusinessplans.utils.Constants;
@@ -30,9 +31,10 @@ public class ReadEditorial extends AppCompatActivity {
     TextView title,date,author,category,content,network_error;
     ShimmerFrameLayout shimmerFrameLayout;
     CardView reload,network_error_card;
-    int details_id,cat;
+    int details_id,cat,author_id;
     String categ,imageURL;
     private final ArrayList<NewsDetailsModel>arrayList = new ArrayList<>();
+    private final ArrayList<Author>authors = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +124,8 @@ public class ReadEditorial extends AppCompatActivity {
                     } else {
                         content.setText(Html.fromHtml(arrayList.get(0).getPostContent()));
                     }
-                    author.setText("By igrandbp");
+                    author_id = arrayList.get(0).getPostAuthor();
+                    getAuthor(author_id);
                     category.setText("In "+categ);
 
                 }
@@ -134,6 +137,26 @@ public class ReadEditorial extends AppCompatActivity {
             public void onFailure(Call<List<NewsDetailsModel>> call, Throwable t) {
                 hideProgress();
                 Constants.networkError(ReadEditorial.this,network_error_card,network_error);
+            }
+        });
+    }
+
+    private void getAuthor(int id) {
+        Call<List<Author>> call = RetrofitClient.getInstance(ReadEditorial.this)
+                .getApiConnector()
+                .getA(id);
+        call.enqueue(new Callback<List<Author>>() {
+            @Override
+            public void onResponse(Call<List<Author>> call, Response<List<Author>> response) {
+                if (response.isSuccessful()) {
+                    authors.addAll(response.body());
+                    author.setText(authors.get(0).getUserNicename());
+                }
+                else {
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Author>> call, Throwable t) {
             }
         });
     }

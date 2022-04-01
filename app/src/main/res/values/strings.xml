@@ -6,6 +6,12 @@
     <string name="CLIENTS_TOKEN">com.example.lovidovi.utils.sharedpref.accessToken</string>
     <string name="CLIENTS_STATUS">com.example.lovidovi.utils.sharedpref.status</string>
 
+
+    <string name="about">Dira La Biashara App is a property of iGrand Business Plans Limited. We exist to promote enterprise
+    growth in Africa by helping entrepreneurs in structuring their businesses to attain efficiency in operations, marketing, tax
+    compliance and financing.</string>
+    <string name="services">Development of 360 business plans</string>
+
     <string name="serverError">Oh no!\nA server error has occurred.Ensure you are connected then retry.</string>
     <string name="netwrokError">Oh no!\nA network error has occurred.Ensure you are connected then retry.</string>
     <string name="banner">289505809176116_289510825842281</string>
@@ -35,4 +41,5 @@
     <string name="equals">=</string>
     <string name="backspace"> </string>
     <string name="display">Enter in a value</string>
+    <string name="engage">Engage us for any of the above listed services via WhatsApp by clicking the below button</string>
 </resources>

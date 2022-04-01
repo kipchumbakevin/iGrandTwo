@@ -6,18 +6,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 
 public class AboutUs extends AppCompatActivity {
     MaterialCardView whatsapp;
+    ImageView arrowBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         whatsapp = findViewById(R.id.whatsapp);
+        arrowBack = findViewById(R.id.arrow_back);
 
+        arrowBack.setOnClickListener(view->onBackPressed());
         whatsapp.setOnClickListener(view->goToWhatsapp());
     }
 
