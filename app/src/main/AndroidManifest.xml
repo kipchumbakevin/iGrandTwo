@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewsActivity"
+            android:name=".ProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity

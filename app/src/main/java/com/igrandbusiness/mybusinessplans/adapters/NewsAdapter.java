@@ -1,9 +1,7 @@
 package com.igrandbusiness.mybusinessplans.adapters;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.igrandbusiness.mybusinessplans.NewsActivity;
 import com.igrandbusiness.mybusinessplans.R;
 import com.igrandbusiness.mybusinessplans.ReadEditorial;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;

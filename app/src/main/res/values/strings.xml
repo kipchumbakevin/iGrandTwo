@@ -10,7 +10,6 @@
     <string name="about">Dira La Biashara App is a property of iGrand Business Plans Limited. We exist to promote enterprise
     growth in Africa by helping entrepreneurs in structuring their businesses to attain efficiency in operations, marketing, tax
     compliance and financing.</string>
-    <string name="services">Development of 360 business plans</string>
 
     <string name="serverError">Oh no!\nA server error has occurred.Ensure you are connected then retry.</string>
     <string name="netwrokError">Oh no!\nA network error has occurred.Ensure you are connected then retry.</string>

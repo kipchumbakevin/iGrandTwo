@@ -1,8 +1,10 @@
 package com.igrandbusiness.mybusinessplans;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -32,7 +34,8 @@ public class ReadEditorial extends AppCompatActivity {
     ShimmerFrameLayout shimmerFrameLayout;
     CardView reload,network_error_card;
     int details_id,cat,author_id;
-    String categ,imageURL;
+    String categ,imageURL,name;
+    LinearLayoutCompat goToProfile;
     private final ArrayList<NewsDetailsModel>arrayList = new ArrayList<>();
     private final ArrayList<Author>authors = new ArrayList<>();
     @Override
@@ -46,20 +49,23 @@ public class ReadEditorial extends AppCompatActivity {
         author = findViewById(R.id.author);
         category = findViewById(R.id.category);
         content = findViewById(R.id.content);
+        goToProfile = findViewById(R.id.go_to_profile);
         shimmerFrameLayout = findViewById(R.id.shimmer);
         network_error_card = findViewById(R.id.network_error_card);
         network_error = findViewById(R.id.network_error);
         reload = findViewById(R.id.refresh);
         cat = Integer.parseInt(getIntent().getExtras().getString("CAT"));
         imageURL = getIntent().getExtras().getString("IMAGE");
-        getCat();
         details_id = Integer.parseInt(getIntent().getExtras().getString("ID"));
         //details_id = 5385;
         getDetails();
         reload.setOnClickListener(view->getDetails());
+        goToProfile.setOnClickListener(view-> startActivity(new Intent(this,ProfileActivity.class)
+        .putExtra("NAME",name)));
     }
 
-    private void getCat() {
+    private String getCat() {
+        categ = "";
         if (cat == 1){
             categ = "Webinar Review";
         }
@@ -93,9 +99,7 @@ public class ReadEditorial extends AppCompatActivity {
         else if (cat == 11){
             categ = "Law Review";
         }
-        else {
-            categ = "";
-        }
+        return "In "+ categ;
     }
     private void getDetails() {
         showProgress();
@@ -111,22 +115,23 @@ public class ReadEditorial extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     scrollView.setVisibility(View.VISIBLE);
                     arrayList.addAll(response.body());
+                    NewsDetailsModel pos = arrayList.get(0);
                     Glide.with(ReadEditorial.this)
                             .load(imageURL)
                             .placeholder(R.drawable.progress_glide)
                             .into(image);
                     //title date author category content
-                    title.setText(arrayList.get(0).getPostTitle());
-                    String dat = arrayList.get(0).getPostDate().substring(0,11);
+                    title.setText(pos.getPostTitle());
+                    String dat = pos.getPostDate().substring(0,11);
                     date.setText("Posted on "+dat);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        content.setText(Html.fromHtml(arrayList.get(0).getPostContent(), Html.FROM_HTML_MODE_LEGACY));
+                        content.setText(Html.fromHtml(pos.getPostContent(), Html.FROM_HTML_MODE_LEGACY));
                     } else {
-                        content.setText(Html.fromHtml(arrayList.get(0).getPostContent()));
+                        content.setText(Html.fromHtml(pos.getPostContent()));
                     }
-                    author_id = arrayList.get(0).getPostAuthor();
+                    author_id = pos.getPostAuthor();
                     getAuthor(author_id);
-                    category.setText("In "+categ);
+                    category.setText(getCat());
 
                 }
                 else {
@@ -140,7 +145,6 @@ public class ReadEditorial extends AppCompatActivity {
             }
         });
     }
-
     private void getAuthor(int id) {
         Call<List<Author>> call = RetrofitClient.getInstance(ReadEditorial.this)
                 .getApiConnector()
@@ -150,9 +154,8 @@ public class ReadEditorial extends AppCompatActivity {
             public void onResponse(Call<List<Author>> call, Response<List<Author>> response) {
                 if (response.isSuccessful()) {
                     authors.addAll(response.body());
-                    author.setText(authors.get(0).getUserNicename());
-                }
-                else {
+                    author.setText("By "+authors.get(0).getUserNicename());
+                    name = authors.get(0).getUserNicename();
                 }
             }
             @Override

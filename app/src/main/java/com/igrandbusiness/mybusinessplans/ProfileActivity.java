@@ -7,26 +7,34 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
-public class NewsActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
     WebView webView;
     ProgressBar progressBar;
-    String url;
+    String url,name;
+    TextView title;
+    ImageView arrowBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_profile);
         progressBar = findViewById(R.id.progress);
         webView = findViewById(R.id.webview);
-        url = getIntent().getExtras().getString("URL");
-
+        title = findViewById(R.id.title);
+        arrowBack = findViewById(R.id.arrow_back);
+        name = getIntent().getExtras().getString("NAME");
+        url = "https://www.igrandbp.com/author/"+name;
+        title.setText("About "+name);
         webView.setWebChromeClient(new MyWebChromeClient());
         webView.setWebViewClient(new webClient());
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setSupportZoom(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
+        arrowBack.setOnClickListener(view->onBackPressed());
 
     }
 
