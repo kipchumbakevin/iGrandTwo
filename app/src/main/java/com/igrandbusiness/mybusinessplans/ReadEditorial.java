@@ -146,6 +146,7 @@ public class ReadEditorial extends AppCompatActivity {
         });
     }
     private void getAuthor(int id) {
+        goToProfile.setEnabled(false);
         Call<List<Author>> call = RetrofitClient.getInstance(ReadEditorial.this)
                 .getApiConnector()
                 .getA(id);
@@ -156,6 +157,7 @@ public class ReadEditorial extends AppCompatActivity {
                     authors.addAll(response.body());
                     author.setText("By "+authors.get(0).getUserNicename());
                     name = authors.get(0).getUserNicename();
+                    goToProfile.setEnabled(true);
                 }
             }
             @Override
