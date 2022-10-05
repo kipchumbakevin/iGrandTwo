@@ -46,7 +46,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         holder.uri = receiveData.getUrl();
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/videos/"+receiveData.getImageurl())
-                .placeholder(R.drawable.progress_glide)
+                .placeholder(R.drawable.placeholder)
                 .into(holder.image);
     }
     @Override

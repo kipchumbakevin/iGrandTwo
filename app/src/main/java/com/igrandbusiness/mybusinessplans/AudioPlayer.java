@@ -35,7 +35,7 @@ public class AudioPlayer extends AppCompatActivity {
         title = getIntent().getExtras().getString("TITLE");
         Glide.with(this)
                 .load(imageurl)
-                .placeholder(R.drawable.progress_glide)
+                .placeholder(R.drawable.placeholder)
                 .into(imageView);
         message = "Podcast loading...";
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

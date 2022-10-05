@@ -47,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.c = newsModel.getCategory();
         holder.details_id = Integer.toString(newsModel.getDetailsId());
         Glide.with(mContext).load(holder.imageUrl)
-                .placeholder(R.drawable.progress_glide)
+                .placeholder(R.drawable.placeholder)
                 .into(holder.image);
     }
 

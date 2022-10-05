@@ -44,7 +44,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
         holder.titl = receiveData.getTitle();
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/magazine/"+receiveData.getImageurl())
-                .placeholder(R.drawable.progress_glide)
+                .placeholder(R.drawable.placeholder)
                 .into(holder.imageView);
     }
 
