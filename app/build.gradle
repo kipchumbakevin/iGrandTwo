@@ -63,4 +63,5 @@ dependencies {
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    implementation files('libs/MathParser.org-mXparser-v.4.4.0-jdk8.jar')
 }

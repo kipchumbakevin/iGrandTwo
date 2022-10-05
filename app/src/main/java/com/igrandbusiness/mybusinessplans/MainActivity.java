@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                         loadVideos();
                     break;
                     case ID_Calc:
-                        startActivity(new Intent(MainActivity.this,CalculatorActivity.class));
+                        startActivity(new Intent(MainActivity.this,CalcActivity.class));
                         finish();
                         break;
                     default:

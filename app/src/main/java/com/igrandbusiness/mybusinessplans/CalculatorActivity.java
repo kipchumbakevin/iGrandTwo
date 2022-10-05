@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,18 +18,21 @@ import javax.script.ScriptException;
 public class CalculatorActivity extends AppCompatActivity {
     EditText input;
     TextView results;
+    ImageView arrowBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         input = findViewById(R.id.input);
         results = findViewById(R.id.result);
+        arrowBack = findViewById(R.id.arrow_back);
         input.setShowSoftInputOnFocus(false);
         input.setOnClickListener(view->{
             if (input.getText().toString().equals(getString(R.string.display))) {
                 input.getText().clear();
             }
         });
+        arrowBack.setOnClickListener(view->onBackPressed());
     }
     private void updateText(String stringToAdd){
         String oldString = input.getText().toString();
@@ -83,6 +87,9 @@ public class CalculatorActivity extends AppCompatActivity {
     }
     public void divideBTN(View view){
         updateText("÷");
+    }
+    public void percentBTN(View view){
+        updateText("%");
     }
     public void addBTN(View view){
         updateText("+");
