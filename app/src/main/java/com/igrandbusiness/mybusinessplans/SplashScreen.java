@@ -19,6 +19,7 @@ import com.google.android.material.button.MaterialButton;
 import com.igrandbusiness.mybusinessplans.adapters.OnboardingAdapter;
 import com.igrandbusiness.mybusinessplans.models.OnboardingItem;
 import com.igrandbusiness.mybusinessplans.utils.Constants;
+import com.igrandbusiness.mybusinessplans.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,14 @@ public class SplashScreen extends AppCompatActivity {
     private OnboardingAdapter onboardingAdapter;
     private LinearLayoutCompat layoutCompatIndicator;
     private MaterialButton buttonOnboardingAction;
+    SharedPreferencesConfig sharedPreferencesConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         layoutCompatIndicator = findViewById(R.id.layoutOnboardingIndicators);
         buttonOnboardingAction = findViewById(R.id.buttonOnboardingAction);
+        sharedPreferencesConfig = new SharedPreferencesConfig(this);
         setupOnboardingItems();
 
         ViewPager2 onboardingViewPager = findViewById(R.id.onboardingViewPager);
@@ -51,6 +54,7 @@ public class SplashScreen extends AppCompatActivity {
             if (onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()){
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             }else {
+                sharedPreferencesConfig.saveAuthenticationInformation(Constants.ACTIVE_CONSTANT);
                 startActivity(new Intent(SplashScreen.this,MainActivity.class)
                         .putExtra("FROM",Integer.toString(2)));
                 finish();
@@ -75,6 +79,17 @@ public class SplashScreen extends AppCompatActivity {
 //            }
 //        }.start();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferencesConfig.isloggedIn()){
+            startActivity(new Intent(SplashScreen.this,MainActivity.class)
+                    .putExtra("FROM",Integer.toString(2)));
+            finish();
+        }
+    }
+
     private void setupOnboardingItems(){
         List<OnboardingItem>onboardingItems = new ArrayList<>();
         OnboardingItem one = new OnboardingItem();
