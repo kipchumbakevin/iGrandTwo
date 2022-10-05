@@ -7,6 +7,14 @@
     android:orientation="vertical"
     android:layout_marginTop="0.5dp"
     tools:context=".CalcActivity">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        android:id="@+id/arrow_back"
+        android:src="@drawable/ic_round_arrow_back"/>
 
     <include
         layout="@layout/inputs_layout"

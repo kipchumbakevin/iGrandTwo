@@ -1,35 +1,23 @@
 package com.igrandbusiness.mybusinessplans;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.mariuszgromada.math.mxparser.Expression;
 
-import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 
 public class CalcActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,15 +25,15 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
     Button equalsBtn, dotBtn, clearBtn, backspaceBtn, addBtn, subBtn, multiplyBtn, multiplyBy100Btn, divideBtn, percentageBtn;
     private TextView resultTxtView;
     private EditText expTxtView;
+    ImageView arrowBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc);
-
+        arrowBack = findViewById(R.id.arrow_back);
         resultTxtView = findViewById(R.id.out);
         expTxtView = findViewById(R.id.exp);
-
         zeroBtn = findViewById(R.id.zero);
         oneBtn = findViewById(R.id.one);
         twoBtn = findViewById(R.id.two);
@@ -91,6 +79,8 @@ public class CalcActivity extends AppCompatActivity implements View.OnClickListe
         percentageBtn.setOnClickListener(this);
 
         expTxtView.setShowSoftInputOnFocus(false);
+
+        arrowBack.setOnClickListener(view->onBackPressed());
         expTxtView.addTextChangedListener(new TextWatcher() {
 
             @Override
