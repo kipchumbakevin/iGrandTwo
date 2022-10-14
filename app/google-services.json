@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1001518636215",
+    "project_id": "igrand",
+    "storage_bucket": "igrand.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001518636215:android:5e6941d1debfd00d064132",
+        "android_client_info": {
+          "package_name": "com.igrandbusiness.mybusinessplans"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001518636215-od4oubgoqcu86hn5ifqlgk7ppkkijtve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwsFhpYMDkJbZKdkv6RTBD9X-kU2K7hpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001518636215-od4oubgoqcu86hn5ifqlgk7ppkkijtve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

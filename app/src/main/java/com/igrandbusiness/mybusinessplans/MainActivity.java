@@ -6,11 +6,15 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,9 +29,13 @@ import com.facebook.ads.AdError;
 import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+    private static final String CHANNEL_ID = "101";
     private final int ID_Home = 1;
     private final int ID_Podcast = 2;
     private final int ID_Videos = 3;
@@ -62,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         if (getIntent().hasExtra("FROM")) {
             from = Integer.parseInt(getIntent().getExtras().getString("FROM"));
         }
+        createNotificationChannel();
+        getToken();
         AudienceNetworkAds.initialize(this);
         interstitialAd = new InterstitialAd(this, getString(R.string.interstitial));
         interstitialAdListener = new InterstitialAdListener() {
@@ -417,4 +427,30 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             interstitialAd.destroy();
         }
     }
+
+    //get application token for firebase notif
+    private void getToken(){
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                      //  Log.e("Token: ", instanceIdResult.getToken());
+                    }
+                });
+    }
+    //create notif channel
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "firebaseNotifChannel";
+            String description = "this is the channel to receive firebase notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }
