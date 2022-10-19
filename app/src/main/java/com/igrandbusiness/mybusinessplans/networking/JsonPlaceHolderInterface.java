@@ -10,6 +10,7 @@ import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.NewsDetailsModel;
 import com.igrandbusiness.mybusinessplans.models.NewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
+import com.igrandbusiness.mybusinessplans.models.Result;
 
 import java.util.List;
 
@@ -35,6 +36,12 @@ public interface JsonPlaceHolderInterface {
     @POST("api/getnews")
     Call<List<NewsModel>> getNews(
             @Field("category")String category
+    );
+    @FormUrlEncoded
+    @POST("api/createstat")
+    Call<Result> saveStat(
+            @Field("contentId")int contentId,
+            @Field("contentType")int contentType
     );
     @FormUrlEncoded
     @POST("api/getsearchednews")

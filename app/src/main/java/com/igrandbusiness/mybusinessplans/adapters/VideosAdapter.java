@@ -44,6 +44,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
         holder.uri = receiveData.getUrl();
+        holder.id = Integer.toString(receiveData.getId());
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/videos/"+receiveData.getImageurl())
                 .placeholder(R.drawable.placeholder)
@@ -56,7 +57,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
 
     public class VideoHolder extends RecyclerView.ViewHolder {
         TextView title;
-        String uri;
+        String uri,id;
         ImageView image;
         public VideoHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +69,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
                     Intent intent = new Intent(mContext, VideoPlayer.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("VIDEO",uri);
+                    intent.putExtra("ID",id);
                     mContext.startActivity(intent);
                     ((Activity)mContext).finish();
                     //MKPlayerActivity.configPlayer((Activity) mContext).play(uri);

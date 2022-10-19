@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.igrandbusiness.mybusinessplans.models.Result;
+import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
+
+import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private static final String CHANNEL_ID = "101";
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     CardView faceb,twitter,telegram,mail,linkedin,whatsapp;
     String phone;
     BottomSheetBehavior bottomSheetBehavior;
+    static String deviceId;
     ConstraintLayout bottom;
     ImageView menuImageView;
     private InterstitialAd interstitialAd;
@@ -66,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         linkedin = findViewById(R.id.linkedin);
         phone = "0755907382";
         ads = 0;
+
+        deviceId = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
         if (getIntent().hasExtra("FROM")) {
             from = Integer.parseInt(getIntent().getExtras().getString("FROM"));
@@ -434,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
-                      //  Log.e("Token: ", instanceIdResult.getToken());
+                      Log.e("Token: ", instanceIdResult.getToken());
                     }
                 });
     }
@@ -452,5 +460,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             notificationManager.createNotificationChannel(channel);
         }
     }
+    private void saveDeviceId(){
 
+
+    }
 }

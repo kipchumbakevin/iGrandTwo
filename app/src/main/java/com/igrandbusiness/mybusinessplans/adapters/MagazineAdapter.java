@@ -41,6 +41,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     public void onBindViewHolder(@NonNull MagazineView holder, int position) {
         ReceiveData receiveData = mContentArray.get(position);
         holder.uri = receiveData.getUrl();
+        holder.id = Integer.toString(receiveData.getId());
         holder.titl = receiveData.getTitle();
         Glide.with(mContext)
                 .load(Constants.BASE_URL+"public/magazine/"+receiveData.getImageurl())
@@ -54,7 +55,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
     }
 
     public class MagazineView extends RecyclerView.ViewHolder {
-        String uri,titl;
+        String uri,titl,id;
         ImageView imageView;
         public MagazineView(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +66,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
                     Intent intent = new Intent(mContext, ViewPDF.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("URI",uri);
+                    intent.putExtra("ID",id);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
                 }

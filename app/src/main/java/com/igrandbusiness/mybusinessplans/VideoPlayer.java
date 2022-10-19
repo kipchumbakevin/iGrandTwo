@@ -31,6 +31,7 @@ public class VideoPlayer extends AppCompatActivity {
     String vid;
     //AndExoPlayerView andExoPlayerView;
     YouTubePlayerView youTubePlayerView;
+    int contentId,contentType = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,9 @@ public class VideoPlayer extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         vid = getIntent().getExtras().getString("VIDEO");
+        contentId = Integer.parseInt(getIntent().getExtras().getString("ID"));
+        contentType = 4;
+        Constants.saveUsageStat(this,contentId,contentType);
         youTubePlayerView = findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {

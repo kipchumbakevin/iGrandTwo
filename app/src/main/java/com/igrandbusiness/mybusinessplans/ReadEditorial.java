@@ -33,7 +33,7 @@ public class ReadEditorial extends AppCompatActivity {
     TextView title,date,author,category,content,network_error;
     ShimmerFrameLayout shimmerFrameLayout;
     CardView reload,network_error_card;
-    int details_id,cat,author_id;
+    int details_id,cat,author_id,contentId,contentType;
     String categ,imageURL,name;
     LinearLayoutCompat goToProfile;
     private final ArrayList<NewsDetailsModel>arrayList = new ArrayList<>();
@@ -57,6 +57,9 @@ public class ReadEditorial extends AppCompatActivity {
         cat = Integer.parseInt(getIntent().getExtras().getString("CAT"));
         imageURL = getIntent().getExtras().getString("IMAGE");
         details_id = Integer.parseInt(getIntent().getExtras().getString("ID"));
+        contentId = Integer.parseInt(getIntent().getExtras().getString("ID"));
+        contentType = 1;
+        Constants.saveUsageStat(this,contentId,contentType);
         //details_id = 5385;
         getDetails();
         reload.setOnClickListener(view->getDetails());

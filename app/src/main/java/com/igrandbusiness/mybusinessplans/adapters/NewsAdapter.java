@@ -42,6 +42,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.title.setText(newsModel.getTitle());
         holder.host.setText(newsModel.getHost());
         holder.date.setText(newsModel.getDate());
+        holder.id = Integer.toString(newsModel.getId());
         holder.url = newsModel.getUrl();
         holder.imageUrl = Constants.BASE_URL + "public/editorials/"+newsModel.getImageurl();
         holder.c = newsModel.getCategory();
@@ -58,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title,host,date;
-        String url,details_id,c,imageUrl;
+        String url,details_id,c,imageUrl,id;
         ImageView image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +75,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     intent.putExtra("ID",details_id);
                     intent.putExtra("IMAGE",imageUrl);
                     intent.putExtra("CAT",c);
+                    intent.putExtra("ID",id);
                     mContext.startActivity(intent);
                 }
             });

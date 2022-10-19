@@ -20,6 +20,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 import com.krishna.fileloader.FileLoader;
 import com.krishna.fileloader.listener.FileRequestListener;
 import com.krishna.fileloader.pojo.FileResponse;
@@ -31,6 +32,7 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
     PDFView pdfView;
     String pdf,name;
     Uri uri;
+    int contentId,contentType = 0;
     CardView progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,9 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
         progress = findViewById(R.id.progress);
         pdf = getIntent().getExtras().getString("URI");
         name = getIntent().getExtras().getString("TITLE");
+        contentId = Integer.parseInt(getIntent().getExtras().getString("ID"));
+        contentType = 3;
+        Constants.saveUsageStat(this,contentId,contentType);
         setTitle(name);
         progress.setVisibility(View.VISIBLE);
         uri = Uri.parse(pdf);
