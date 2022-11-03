@@ -13,6 +13,7 @@ import com.arges.sepan.argmusicplayer.Callbacks.OnPreparedListener;
 import com.arges.sepan.argmusicplayer.Enums.ErrorType;
 import com.arges.sepan.argmusicplayer.Models.ArgAudio;
 import com.arges.sepan.argmusicplayer.Models.ArgAudioList;
+import com.arges.sepan.argmusicplayer.Models.ArgNotificationOptions;
 import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerFullScreenView;
 import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView;
 import com.bumptech.glide.Glide;
@@ -33,6 +34,7 @@ public class AudioPlayer extends AppCompatActivity {
     ImageView imageView;
     private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
     TextView titelText;
+    int pos;
     SharedPreferencesConfig sharedPreferencesConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class AudioPlayer extends AppCompatActivity {
         url = getIntent().getExtras().getString("URI");
         imageurl = getIntent().getExtras().getString("IMAGEURL");
         title = getIntent().getExtras().getString("TITLE");
+        pos = Integer.parseInt(getIntent().getExtras().getString("pos"));
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
         Glide.with(this)
                 .load(imageurl)
@@ -69,10 +72,12 @@ public class AudioPlayer extends AppCompatActivity {
         ArgPlayerLargeView argMusicPlayer = findViewById(R.id.argmusicplayer);
 //        argMusicPlayer.disableProgress();
 //        argMusicPlayer.disableNextPrevButtons();
-        argMusicPlayer.enableNotification(this);
+        argMusicPlayer.enableNotification(new ArgNotificationOptions(this)
+                .setProgressEnabled(true)
+                .setImageResoureId(R.drawable.icon));
         argMusicPlayer.playAudioAfterPercent(5);
-       // argMusicPlayer.play(audio);
-        argMusicPlayer.playPlaylist(playlist );
+        playlist.goTo(pos);
+        argMusicPlayer.playPlaylist(playlist);
         argMusicPlayer.setOnErrorListener((errorType, s) -> argMusicPlayer.disableNotification());
 //        argMusicPlayer.setOnPreparedListener(new OnPreparedListener() {
 //            @Override

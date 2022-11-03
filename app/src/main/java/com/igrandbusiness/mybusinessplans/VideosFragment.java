@@ -53,6 +53,7 @@ public class VideosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     View act;
+    int category;
     String latestUrl;
     VideosAdapter videosAdapter;
     TextView novideos,network_error,latestNewsTitle,learnMore;
@@ -118,15 +119,27 @@ public class VideosFragment extends Fragment {
             fetchVideos();
             fetchLatest();
         });
-        learnMore.setOnClickListener(new View.OnClickListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), VideoPlayer.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("VIDEO",latestUrl);
-                startActivity(intent);
-                ((Activity)getActivity()).finish();
+            public void onTabSelected(TabLayout.Tab tab) {
+                category = tabLayout.getSelectedTabPosition();
+                Toast.makeText(getActivity(), ""+category, Toast.LENGTH_SHORT).show();
             }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        learnMore.setOnClickListener(view12 -> {
+            Intent intent = new Intent(getActivity(), VideoPlayer.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("VIDEO",latestUrl);
+            startActivity(intent);
+            ((Activity)getActivity()).finish();
         });
         return view;
     }
