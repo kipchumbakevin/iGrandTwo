@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.igrandbusiness.mybusinessplans.adapters.MagazineAdapter;
 import com.igrandbusiness.mybusinessplans.adapters.VideosAdapter;
 import com.igrandbusiness.mybusinessplans.models.Feature;
@@ -57,6 +58,7 @@ public class VideosFragment extends Fragment {
     TextView novideos,network_error,latestNewsTitle,learnMore;
     ImageView latestNewsImage;
     CardView progress, reload, network_error_card;
+    TabLayout tabLayout;
     RecyclerView recyclerView;
     private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
     public VideosFragment() {
@@ -101,6 +103,7 @@ public class VideosFragment extends Fragment {
         network_error_card = view.findViewById(R.id.network_error_card);
         progress = view.findViewById(R.id.progress);
         act = view;
+        tabLayout = view.findViewById(R.id.tablayout);
         latestNewsTitle = view.findViewById(R.id.latest_news_title);
         learnMore = view.findViewById(R.id.learn_more);
         latestNewsImage = view.findViewById(R.id.latest_news_image);
@@ -108,6 +111,7 @@ public class VideosFragment extends Fragment {
         videosAdapter = new VideosAdapter(getActivity(),mContentArrayList);
         recyclerView.setAdapter(videosAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        filltabs(tabLayout);
         fetchVideos();
         fetchLatest();
         reload.setOnClickListener(view1 -> {
@@ -161,6 +165,11 @@ public class VideosFragment extends Fragment {
                 network_error_card.setVisibility(View.VISIBLE);
             }
         });
+    }
+    private void filltabs(TabLayout tabLayout) {
+                tabLayout.addTab(tabLayout.newTab().setText("iGrand TV"));
+                tabLayout.addTab(tabLayout.newTab().setText("iGrand TV"));
+
     }
     private void fetchVideos() {
         progress.setVisibility(View.VISIBLE);

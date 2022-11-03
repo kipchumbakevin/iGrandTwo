@@ -5,6 +5,7 @@
     <string name="CLIENTS_EMAIL">com.example.lovidovi.utils.sharedpref.email</string>
     <string name="CLIENTS_TOKEN">com.example.lovidovi.utils.sharedpref.accessToken</string>
     <string name="CLIENTS_STATUS">com.example.lovidovi.utils.sharedpref.status</string>
+    <string name="POD">com.example.lovidovi.utils.sharedpref.podcast</string>
 
 
     <string name="about">Dira La Biashara App is a property of iGrand Business Plans Limited. We exist to promote enterprise

@@ -70,9 +70,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:tint="@color/purple_700"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_search_24"/>
+                        android:src="@drawable/ic_baseline_search_24"
+                        app:tint="@color/purple_700" />
                    </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

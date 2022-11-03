@@ -48,9 +48,10 @@ public class Constants {
     }
 
     public static void saveUsageStat(Activity activity,int contentId, int contentType){
+        String deviceId = Settings.Secure.getString(activity.getContentResolver(),Settings.Secure.ANDROID_ID);
         Call<Result> call = RetrofitClient.getInstance(activity)
                 .getApiConnector()
-                .saveStat(contentId,contentId);
+                .saveStat(deviceId,contentId,contentType);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {

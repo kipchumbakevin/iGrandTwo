@@ -25,6 +25,7 @@ import com.igrandbusiness.mybusinessplans.models.LatestNewsModel;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
 import com.igrandbusiness.mybusinessplans.utils.Constants;
+import com.igrandbusiness.mybusinessplans.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class PodcastFragment extends Fragment {
     TextView novideos,network_error,latestNewsTitle,learnMore;
     ImageView latestNewsImage;
     View act;
+    SharedPreferencesConfig sharedPreferencesConfig;
     String latestUrl;
     CardView progress, reload, network_error_card;
     RecyclerView recyclerView;
@@ -105,6 +107,7 @@ public class PodcastFragment extends Fragment {
         contentAdapter = new ContentAdapter(getActivity(),mContentArrayList);
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        sharedPreferencesConfig = new SharedPreferencesConfig(getActivity());
         fetchPod();
         fetchLatest();
         reload.setOnClickListener(view1 -> {
@@ -173,6 +176,8 @@ public class PodcastFragment extends Fragment {
                     recyclerView.setVisibility(View.VISIBLE);
                     if (response.body().size()>0){
                         mContentArrayList.addAll(response.body());
+                        sharedPreferencesConfig.clearPod();
+                        sharedPreferencesConfig.savePod(mContentArrayList);
                         contentAdapter.notifyDataSetChanged();
                     }else {
                         novideos.setVisibility(View.VISIBLE);

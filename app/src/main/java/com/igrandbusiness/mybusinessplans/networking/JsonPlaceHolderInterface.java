@@ -40,6 +40,7 @@ public interface JsonPlaceHolderInterface {
     @FormUrlEncoded
     @POST("api/createstat")
     Call<Result> saveStat(
+            @Field("deviceId")String seviceId,
             @Field("contentId")int contentId,
             @Field("contentType")int contentType
     );

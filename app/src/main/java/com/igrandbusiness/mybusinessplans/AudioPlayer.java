@@ -12,18 +12,28 @@ import com.arges.sepan.argmusicplayer.Callbacks.OnErrorListener;
 import com.arges.sepan.argmusicplayer.Callbacks.OnPreparedListener;
 import com.arges.sepan.argmusicplayer.Enums.ErrorType;
 import com.arges.sepan.argmusicplayer.Models.ArgAudio;
+import com.arges.sepan.argmusicplayer.Models.ArgAudioList;
 import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerFullScreenView;
 import com.arges.sepan.argmusicplayer.PlayerViews.ArgPlayerLargeView;
 import com.bumptech.glide.Glide;
 import com.example.jean.jcplayer.model.JcAudio;
 import com.example.jean.jcplayer.view.JcPlayerView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.igrandbusiness.mybusinessplans.models.ReceiveData;
+import com.igrandbusiness.mybusinessplans.utils.SharedPreferencesConfig;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 
 public class AudioPlayer extends AppCompatActivity {
     String url,title,message,imageurl;
     JcPlayerView jcPlayerView;
     ImageView imageView;
+    private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
     TextView titelText;
+    SharedPreferencesConfig sharedPreferencesConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +43,7 @@ public class AudioPlayer extends AppCompatActivity {
         url = getIntent().getExtras().getString("URI");
         imageurl = getIntent().getExtras().getString("IMAGEURL");
         title = getIntent().getExtras().getString("TITLE");
+        sharedPreferencesConfig = new SharedPreferencesConfig(this);
         Glide.with(this)
                 .load(imageurl)
                 .placeholder(R.drawable.placeholder)
@@ -48,13 +59,20 @@ public class AudioPlayer extends AppCompatActivity {
         titelText.setText(title);
         titelText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         titelText.setSelected(true);
-        ArgAudio audio = ArgAudio.createFromURL("", title, url);
+        ArgAudioList playlist = new ArgAudioList(true);
+        getPods();
+        for (int i=0;i<mContentArrayList.size();i++){
+            ArgAudio audio = ArgAudio.createFromURL("", mContentArrayList.get(i).getTitle(), mContentArrayList.get(i).getUrl());
+            playlist.add(audio);
+        }
+       // ArgAudio audio = ArgAudio.createFromURL("", title, url);
         ArgPlayerLargeView argMusicPlayer = findViewById(R.id.argmusicplayer);
-        argMusicPlayer.disableProgress();
-        argMusicPlayer.disableNextPrevButtons();
+//        argMusicPlayer.disableProgress();
+//        argMusicPlayer.disableNextPrevButtons();
         argMusicPlayer.enableNotification(this);
         argMusicPlayer.playAudioAfterPercent(5);
-        argMusicPlayer.play(audio);
+       // argMusicPlayer.play(audio);
+        argMusicPlayer.playPlaylist(playlist );
         argMusicPlayer.setOnErrorListener((errorType, s) -> argMusicPlayer.disableNotification());
 //        argMusicPlayer.setOnPreparedListener(new OnPreparedListener() {
 //            @Override
@@ -62,12 +80,15 @@ public class AudioPlayer extends AppCompatActivity {
 //                argMusicPlayer.enableNotification(AudioPlayer.this);
 //            }
 //        });
-        argMusicPlayer.setOnCompletedListener(new OnCompletedListener() {
-            @Override
-            public void onCompleted() {
+        argMusicPlayer.setOnCompletedListener(() -> {
 
-            }
         });
+    }
+    private void getPods(){
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<ReceiveData>>() {}.getType();
+        ArrayList<ReceiveData>data = gson.fromJson(sharedPreferencesConfig.getPod(),type);
+        mContentArrayList.addAll(data);
     }
 
 }
