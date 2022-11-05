@@ -3,12 +3,14 @@ package com.igrandbusiness.mybusinessplans;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arges.sepan.argmusicplayer.Callbacks.OnCompletedListener;
 import com.arges.sepan.argmusicplayer.Callbacks.OnErrorListener;
+import com.arges.sepan.argmusicplayer.Callbacks.OnPlaylistAudioChangedListener;
 import com.arges.sepan.argmusicplayer.Callbacks.OnPreparedListener;
 import com.arges.sepan.argmusicplayer.Enums.ErrorType;
 import com.arges.sepan.argmusicplayer.Models.ArgAudio;
@@ -22,6 +24,7 @@ import com.example.jean.jcplayer.view.JcPlayerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 import com.igrandbusiness.mybusinessplans.utils.SharedPreferencesConfig;
 
 import java.lang.reflect.Type;
@@ -34,8 +37,9 @@ public class AudioPlayer extends AppCompatActivity {
     ImageView imageView;
     private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
     TextView titelText;
-    int pos;
+    int pos,id;
     SharedPreferencesConfig sharedPreferencesConfig;
+    ArgPlayerLargeView argMusicPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,15 +48,16 @@ public class AudioPlayer extends AppCompatActivity {
         titelText = findViewById(R.id.title);
         url = getIntent().getExtras().getString("URI");
         imageurl = getIntent().getExtras().getString("IMAGEURL");
+        id = Integer.parseInt(getIntent().getExtras().getString("ID"));
         title = getIntent().getExtras().getString("TITLE");
         pos = Integer.parseInt(getIntent().getExtras().getString("pos"));
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
+        Constants.saveUsageStat(this,id,2);
         Glide.with(this)
                 .load(imageurl)
                 .placeholder(R.drawable.placeholder)
                 .into(imageView);
         message = "Podcast loading...";
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 //        jcPlayerView = (JcPlayerView) findViewById(R.id.jcplayerView);
 //        jcPlayerView.kill();
 //        ArrayList<JcAudio> jcAudios = new ArrayList<>();
@@ -61,7 +66,6 @@ public class AudioPlayer extends AppCompatActivity {
 //        jcPlayerView.createNotification(R.drawable.icon);
         titelText.setText(title);
         titelText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        titelText.setSelected(true);
         ArgAudioList playlist = new ArgAudioList(true);
         getPods();
         for (int i=0;i<mContentArrayList.size();i++){
@@ -69,7 +73,7 @@ public class AudioPlayer extends AppCompatActivity {
             playlist.add(audio);
         }
        // ArgAudio audio = ArgAudio.createFromURL("", title, url);
-        ArgPlayerLargeView argMusicPlayer = findViewById(R.id.argmusicplayer);
+        argMusicPlayer = findViewById(R.id.argmusicplayer);
 //        argMusicPlayer.disableProgress();
 //        argMusicPlayer.disableNextPrevButtons();
         argMusicPlayer.enableNotification(new ArgNotificationOptions(this)
@@ -78,6 +82,19 @@ public class AudioPlayer extends AppCompatActivity {
         argMusicPlayer.playAudioAfterPercent(5);
         playlist.goTo(pos);
         argMusicPlayer.playPlaylist(playlist);
+        argMusicPlayer.setOnPlaylistAudioChangedListener((playlist1, currentAudioIndex) -> {
+            String ii = playlist1.get(currentAudioIndex).getTitle();
+            titelText.setText(ii);
+            titelText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            ii = ii.replaceAll("\\s", "");
+            for (int i = 0;i < mContentArrayList.size();i++){
+                String nn = "- "+mContentArrayList.get(i).getTitle();
+                nn=nn.replaceAll("\\s", "");
+                if (nn.equalsIgnoreCase(ii)){
+                    Constants.saveUsageStat(AudioPlayer.this,mContentArrayList.get(i).getId(),2);
+                }
+            }
+        });
         argMusicPlayer.setOnErrorListener((errorType, s) -> argMusicPlayer.disableNotification());
 //        argMusicPlayer.setOnPreparedListener(new OnPreparedListener() {
 //            @Override
@@ -95,5 +112,4 @@ public class AudioPlayer extends AppCompatActivity {
         ArrayList<ReceiveData>data = gson.fromJson(sharedPreferencesConfig.getPod(),type);
         mContentArrayList.addAll(data);
     }
-
 }

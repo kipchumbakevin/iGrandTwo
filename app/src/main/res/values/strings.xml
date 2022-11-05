@@ -8,9 +8,7 @@
     <string name="POD">com.example.lovidovi.utils.sharedpref.podcast</string>
 
 
-    <string name="about">Dira La Biashara App is a property of iGrand Business Plans Limited. We exist to promote enterprise
-    growth in Africa by helping entrepreneurs in structuring their businesses to attain efficiency in operations, marketing, tax
-    compliance and financing.</string>
+    <string name="about">Dira La Biashara App is a property of iGrand Business Plans Limited. We are specialists in tax advisory, outsourced accounting, Startup fundraising and business plan development. We have collaborated with other consultancy firms to make this application a one-stop shop for the following business support services.</string>
 
     <string name="serverError">Oh no!\nA server error has occurred.Ensure you are connected then retry.</string>
     <string name="netwrokError">Oh no!\nA network error has occurred.Ensure you are connected then retry.</string>

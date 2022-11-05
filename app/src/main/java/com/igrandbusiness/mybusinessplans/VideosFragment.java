@@ -53,7 +53,7 @@ public class VideosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     View act;
-    int category;
+    int category = 0;
     String latestUrl;
     VideosAdapter videosAdapter;
     TextView novideos,network_error,latestNewsTitle,learnMore;
@@ -113,17 +113,17 @@ public class VideosFragment extends Fragment {
         recyclerView.setAdapter(videosAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         filltabs(tabLayout);
-        fetchVideos();
         fetchLatest();
+        fetchVideos(category);
         reload.setOnClickListener(view1 -> {
-            fetchVideos();
+            fetchVideos(category);
             fetchLatest();
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 category = tabLayout.getSelectedTabPosition();
-                Toast.makeText(getActivity(), ""+category, Toast.LENGTH_SHORT).show();
+                fetchVideos(category);
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -181,16 +181,17 @@ public class VideosFragment extends Fragment {
     }
     private void filltabs(TabLayout tabLayout) {
                 tabLayout.addTab(tabLayout.newTab().setText("iGrand TV"));
-                tabLayout.addTab(tabLayout.newTab().setText("iGrand TV"));
+                tabLayout.addTab(tabLayout.newTab().setText("Premier Inspirations Consultancy"));
 
     }
-    private void fetchVideos() {
+    private void fetchVideos(int type) {
         progress.setVisibility(View.VISIBLE);
         network_error_card.setVisibility(View.GONE);
+        novideos.setVisibility(View.GONE);
         mContentArrayList.clear();
         Call<List<ReceiveData>> call = RetrofitClient.getInstance(getActivity())
                 .getApiConnector()
-                .getVids();
+                .getVids(type);
         call.enqueue(new Callback<List<ReceiveData>>() {
             @Override
             public void onResponse(Call<List<ReceiveData>> call, Response<List<ReceiveData>> response) {

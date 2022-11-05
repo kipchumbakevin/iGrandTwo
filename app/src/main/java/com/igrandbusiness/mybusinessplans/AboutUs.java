@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,10 +23,9 @@ public class AboutUs extends AppCompatActivity {
         arrowBack = findViewById(R.id.arrow_back);
 
         arrowBack.setOnClickListener(view->onBackPressed());
-        whatsapp.setOnClickListener(view->goToWhatsapp());
     }
 
-    private void goToWhatsapp() {
+    public void goToWhatsapp(View view) {
         try {
             PackageManager pm = getPackageManager();
             pm.getPackageInfo("com.whatsapp",PackageManager.GET_ACTIVITIES);

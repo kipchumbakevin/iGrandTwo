@@ -51,6 +51,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                 .into(holder.image);
         holder.imageurl = Constants.BASE_URL+"public/podcast/"+receiveData.getImageurl();
         holder.pos = Integer.toString(position);
+        holder.id = Integer.toString(receiveData.getId());
     }
     @Override
     public int getItemCount() {
@@ -60,7 +61,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     public class ContentHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView image;
-        String uri,titl,imageurl,pos;
+        String uri,titl,imageurl,pos,id;
         public ContentHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
@@ -74,6 +75,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                     intent.putExtra("IMAGEURL",imageurl);
                     intent.putExtra("TITLE",titl);
                     intent.putExtra("pos",pos);
+                    intent.putExtra("ID",id);
                     mContext.startActivity(intent);
                 }
             });

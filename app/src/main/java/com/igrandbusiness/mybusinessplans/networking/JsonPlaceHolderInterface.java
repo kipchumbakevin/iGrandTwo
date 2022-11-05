@@ -23,8 +23,11 @@ import retrofit2.http.POST;
 public interface JsonPlaceHolderInterface {
 
     //getvideo
-    @GET("api/getvid")
-    Call<List<ReceiveData>> getVids();
+    @FormUrlEncoded
+    @POST("api/getvid")
+    Call<List<ReceiveData>> getVids(
+            @Field("type")int type
+    );
     //getmagazine
     @GET("api/getmag")
     Call<List<ReceiveData>> getMags();

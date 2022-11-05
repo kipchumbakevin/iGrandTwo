@@ -99,7 +99,7 @@
             android:textColor="@color/purple_700"
             android:id="@+id/novideos"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="No magazines Available"/>
+            android:text="No videos Available"/>
         <androidx.cardview.widget.CardView
             android:id="@+id/progress"
             android:layout_width="30dp"
