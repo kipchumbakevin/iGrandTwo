@@ -3,7 +3,7 @@ package com.igrandbusiness.mybusinessplans.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Feature {
+public class   Feature {
     @SerializedName("id")
     @Expose
     private Integer id;

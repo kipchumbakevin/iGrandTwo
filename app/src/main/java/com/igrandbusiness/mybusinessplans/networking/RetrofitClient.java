@@ -28,14 +28,11 @@ public class RetrofitClient {
         }
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request();
-                        Request.Builder new_request = request.newBuilder()
-                                .addHeader("Authorization","Bearer "+accessToken);
-                        return chain.proceed(new_request.build());
-                    }
+                .addInterceptor(chain -> {
+                    Request request = chain.request();
+                    Request.Builder new_request = request.newBuilder()
+                            .addHeader("Authorization","Bearer "+accessToken);
+                    return chain.proceed(new_request.build());
                 });
         retrofit=new Retrofit.Builder()
                 .baseUrl(BaseUrl)

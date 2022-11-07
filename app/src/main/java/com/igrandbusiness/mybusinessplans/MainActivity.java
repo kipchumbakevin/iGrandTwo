@@ -25,19 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.facebook.ads.Ad;
-import com.facebook.ads.AdError;
-import com.facebook.ads.AudienceNetworkAds;
-import com.facebook.ads.InterstitialAd;
-import com.facebook.ads.InterstitialAdListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.igrandbusiness.mybusinessplans.models.Result;
-import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
 
-import retrofit2.Call;
+
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     private static final String CHANNEL_ID = "101";
@@ -55,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     static String deviceId;
     ConstraintLayout bottom;
     ImageView menuImageView;
-    private InterstitialAd interstitialAd;
-    private InterstitialAdListener interstitialAdListener;
     int ads,from;
     boolean oo,ff,homeIsLoaded = true;
     @Override
@@ -80,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
         createNotificationChannel();
         getToken();
-        AudienceNetworkAds.initialize(this);
 
         frameLayout = findViewById(R.id.frame_layout);
         igrandTitle = findViewById(R.id.igrand_title);
@@ -364,9 +353,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (interstitialAd != null){
-            interstitialAd.destroy();
-        }
     }
 
     //get application token for firebase notif
